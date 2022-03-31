@@ -84,22 +84,66 @@ export class UsernameLoginPage implements OnInit {
       }
       this.http.post('/user_google_signin', Data).subscribe((response: any) => {
         console.log(response);
-        this.mailid = null
-        this.password = null
+        if (response.success == "true") {
+          this.dismiss()
+          this.mailid = null
+          this.password = null
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+  
+          Toast.fire({
+            icon: 'success',
+            title: 'Login successfully'
+          })
+          
+        }
+        if (response.message = "Your Account Deactivated.") {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'error',
+            title: 'You have to verify your account'
+          })
+
+          this.VerifyAccount = true;
+
+        }
+      
       }, (error: any) => {
         console.log(error);
+        console.log(error.error.message);
+
       });
     }
   }
 
 
-
+  VerifyAccount: any = false;
   async dismiss() {
     await this.modalCtrl.dismiss();
   }
 
 
-  async  forgotpassword() {
+  async forgotpassword() {
     const modal = await this.modalCtrl.create({
       component: ForgotpasswordPage,
       animated: true,
@@ -111,10 +155,10 @@ export class UsernameLoginPage implements OnInit {
     return await modal.present();
   }
 
-  mobilenumber:any;
-  async verifyAccount(){
+  mobilenumber: any;
+  async verifyAccount() {
     localStorage.setItem("24hrs-user-mobile-number-otp-verification", this.mobilenumber);
-     const modal = await this.modalCtrl.create({
+    const modal = await this.modalCtrl.create({
       component: OtpPage,
       animated: true,
       mode: 'ios',
@@ -127,7 +171,7 @@ export class UsernameLoginPage implements OnInit {
 
 
 
-  signup(){
+  signup() {
     this.dismiss();
     this.router.navigate(['/register'])
   }
