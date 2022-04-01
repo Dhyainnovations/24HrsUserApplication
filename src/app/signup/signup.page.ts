@@ -46,8 +46,6 @@ export class SignupPage implements OnInit {
 
   constructor(private router: Router, private http: HttpService,
     private toastCtrl: ToastController, public popoverController: PopoverController, private route: ActivatedRoute) {
-
-    this.locationList();
   }
 
 

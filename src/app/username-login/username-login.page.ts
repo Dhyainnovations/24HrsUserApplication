@@ -85,7 +85,6 @@ export class UsernameLoginPage implements OnInit {
       this.http.post('/user_google_signin', Data).subscribe((response: any) => {
         console.log(response);
         if (response.message == "Your Account Deactivated.") {
-          alert("Deactivate")
           this.LoginAccount = false;
           this.VerifyAccount = true;
           const Toast = Swal.mixin({
@@ -106,7 +105,6 @@ export class UsernameLoginPage implements OnInit {
           })
         }
         if (response.message == "Login Successfully") {
-          alert("Login")
           this.dismiss()
           if (response.user_status == "First Login") {
             this.router.navigate(['/signuppage'])

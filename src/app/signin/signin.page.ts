@@ -214,7 +214,6 @@ export class SigninPage implements OnInit {
 
       if (response.success == "true") {
         this.dismiss()
-        alert("VErified")
         this.http.post('/login_using_mobile', Data).subscribe((response: any) => {
           console.log(response);
           localStorage.setItem("token", response.token)
