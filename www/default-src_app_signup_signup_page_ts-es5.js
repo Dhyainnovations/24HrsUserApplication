@@ -91,9 +91,10 @@
           this.toastCtrl = toastCtrl;
           this.popoverController = popoverController;
           this.route = route;
-          this.userTbid = localStorage.getItem("tbid");
+          this.userTbid = localStorage.getItem("loginstatus");
           this.mobilenumber = localStorage.getItem("mobilenumber");
           this.userName = "";
+          this.mobileNumber = 8838373520;
           this.locationsList = [];
           this.route.queryParams.subscribe(function (queryParams) {
             _this.locationList();
@@ -127,7 +128,7 @@
               "tbid": this.userTbid,
               "user_name": this.userName,
               "mobile_number": this.mobilenumber,
-              "location": this.city
+              "location": this.location
             };
             console.log(data);
             this.http.post('/user_update_profile', data).subscribe(function (response) {
@@ -135,7 +136,7 @@
 
               if (response.success == "true") {
                 localStorage.setItem("userName", _this3.userName);
-                localStorage.setItem("location", _this3.city);
+                localStorage.setItem("location", _this3.location);
 
                 _this3.router.navigate(['/selectcategories']);
               }

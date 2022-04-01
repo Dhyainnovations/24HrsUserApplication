@@ -156,7 +156,7 @@ let ChangeCategoryPage = class ChangeCategoryPage {
     }
     getCategory() {
         console.log(this.selectedCategoryList);
-        this.http.get('/list_store_category').subscribe((response) => {
+        this.http.get('/list_category').subscribe((response) => {
             this.getCategoryList = response.records;
         }, (error) => {
             console.log(error);
@@ -237,7 +237,7 @@ let HttpService = class HttpService {
     post(serviceName, data) {
         const token = ((localStorage.getItem("token")));
         const url = _environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.baseUrl + serviceName;
-        if (serviceName == '/user_get_otp' || serviceName == '/user_verify_otp' || serviceName == '/user_register' || serviceName == '/user_login' || serviceName == 'list_offer_category') {
+        if (serviceName == '/user_get_otp' || serviceName == '/user_verify_otp' || serviceName == '/user_register' || serviceName == '/user_login') {
             const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders();
             const options = { headers: headers, withCredentials: false };
             return this.http.post(url, JSON.stringify(data), { headers: headers });
@@ -299,7 +299,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n<ion-content class=\"bg-class\" [fullscreen]=\"true\">\n  <div class=\" mt-5\">\n   <div class=\"container mx-3\">\n    <ion-icon style=\"font-size:20px\" color=\"danger\" (click)=\"backToPrivious()\" name=\"arrow-back-outline\"></ion-icon>\n   </div>\n    <p class=\"mt-3 mx-4\" style=\"color:#5C5C5C;font-size: 24px;margin:15px;\">Select preferred categories:</p>\n    <div class=\"container mt-4\">\n      \n      <ion-chip  (click)=\"toggleClass(item)\" [ngClass]=\"{'active': item.active}\" *ngFor=\"let item of getCategoryList\" style=\"color:#EB154B;background-color: #fffcfa;\">\n        <ion-label >{{ item.store_category }}</ion-label>\n        <!-- <ion-icon  style=\"color:#121212\" name=\"checkmark-circle-sharp\"></ion-icon> -->\n      </ion-chip>\n    </div>\n\n    <div class=\"col-12 mt-2\" style=\"text-align: right;\">\n      <button (click)=\"verify()\" class=\"btn btn-success btn-sm  myproducts-btn mt-1\">Submit</button>\n    </div>\n\n    <!-- <lottie-player (click)=\"getPicture()\" src=\"https://assets1.lottiefiles.com/packages/lf20_rsqhglyn.json\" background=\"transparent\"\n    speed=\"1.5\" style=\"width:100%;margin-left:0px;\" loop autoplay></lottie-player> -->\n  </div>\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("\n<ion-content class=\"bg-class\" [fullscreen]=\"true\">\n  <div class=\" mt-5\">\n   <div class=\"container mx-3\">\n    <ion-icon style=\"font-size:20px\" color=\"danger\" (click)=\"backToPrivious()\" name=\"arrow-back-outline\"></ion-icon>\n   </div>\n    <p class=\"mt-3 mx-4\" style=\"color:#5C5C5C;font-size: 24px;margin:15px;\">Select preferred categories:</p>\n    <div class=\"container mt-4\">\n      \n      <ion-chip  (click)=\"toggleClass(item)\" [ngClass]=\"{'active': item.active}\" *ngFor=\"let item of getCategoryList\" style=\"color:#EB154B;background-color: #fffcfa;\">\n        <ion-label >{{ item.category }}</ion-label>\n        <!-- <ion-icon  style=\"color:#121212\" name=\"checkmark-circle-sharp\"></ion-icon> -->\n      </ion-chip>\n    </div>\n\n    <div class=\"col-12 mt-2\" style=\"text-align: right;\">\n      <button (click)=\"verify()\" class=\"btn btn-success btn-sm  myproducts-btn mt-1\">Submit</button>\n    </div>\n\n    <!-- <lottie-player (click)=\"getPicture()\" src=\"https://assets1.lottiefiles.com/packages/lf20_rsqhglyn.json\" background=\"transparent\"\n    speed=\"1.5\" style=\"width:100%;margin-left:0px;\" loop autoplay></lottie-player> -->\n  </div>\n</ion-content>");
 
 /***/ })
 

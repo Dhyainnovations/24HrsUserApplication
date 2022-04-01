@@ -36,9 +36,10 @@ let SignupPage = class SignupPage {
         this.toastCtrl = toastCtrl;
         this.popoverController = popoverController;
         this.route = route;
-        this.userTbid = ((localStorage.getItem("tbid")));
+        this.userTbid = ((localStorage.getItem("loginstatus")));
         this.mobilenumber = ((localStorage.getItem("mobilenumber")));
         this.userName = "";
+        this.mobileNumber = 8838373520;
         this.locationsList = [];
         this.route.queryParams.subscribe(queryParams => {
             this.locationList();
@@ -61,14 +62,14 @@ let SignupPage = class SignupPage {
             "tbid": this.userTbid,
             "user_name": this.userName,
             "mobile_number": this.mobilenumber,
-            "location": this.city
+            "location": this.location
         };
         console.log(data);
         this.http.post('/user_update_profile', data).subscribe((response) => {
             console.log(response);
             if (response.success == "true") {
                 localStorage.setItem("userName", this.userName);
-                localStorage.setItem("location", this.city);
+                localStorage.setItem("location", this.location);
                 this.router.navigate(['/selectcategories']);
             }
         }, (error) => {

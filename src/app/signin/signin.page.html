@@ -21,7 +21,7 @@
 
   <div class="row">
     <div class="col-{{MobInputcolSize}}">
-      <ion-input style="color: #000000;" [(ngModel)]="mobileNumber" (keyup)="enterMobile()" placeholder="Enter Your Mobile Number" class="primary-input"></ion-input>
+      <ion-input style="color: #000000;" [(ngModel)]="mobileNumber" (keyup)="enterMobile()" placeholder="Enter your mobile number" class="primary-input"></ion-input>
     </div>
     <div *ngIf="sendOtpBtnVisible" color="dark" class="col-4 ">
       <button (click)="sendOtp()" class=" btn btn-sm otp-btn">Send Otp</button>
@@ -56,10 +56,9 @@
   </div>
 
  
-  <ion-input style="color: #000000;" (click)="enterOtp()" [(ngModel)]="otp" placeholder="Enter OTP" type="password" class="primary-input"></ion-input>
+  <ion-input style="color: #000000;" (click)="enterOtp()" [(ngModel)]="otp" placeholder="Enter Otp" type="password" class="primary-input"></ion-input>
   <div class="ion-margin-top">
     <ion-button  [disabled]="otp == '' " expand="block" color="dark" (click)="signIn()">LOGIN</ion-button>
-    <p class="text-center small">New User ? <b (click)="signup()">Sign Up</b></p>
   </div>
 
   

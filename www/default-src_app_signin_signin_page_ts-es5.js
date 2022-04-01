@@ -34,7 +34,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -52,7 +52,7 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
@@ -64,29 +64,19 @@
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/router */
       39895);
       /* harmony import */
 
 
-      var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! sweetalert2 */
-      88259);
-      /* harmony import */
-
-
-      var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
-      /* harmony import */
-
-
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
 
 
-      var _angular_animations__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_animations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/animations */
       55160);
 
@@ -188,7 +178,7 @@
         }, {
           key: "dismiss",
           value: function dismiss() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
               return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
                   switch (_context.prev = _context.next) {
@@ -229,19 +219,17 @@
               mobile_number: this.mobileNumber
             };
             console.log(Data);
-            console.log(this.registersts); //--------------- Register Api ------------//
-
-            this.http.post('/user_register', Data).subscribe(function (response) {
-              console.log(response);
-              _this3.loginsts = response.user_status;
-            }, function (error) {
-              console.log(error);
-            }); //--------------- Get otp Api ------------//
-
             this.http.post('/user_get_otp', Data).subscribe(function (response) {
               console.log(response);
               _this3.registersts = response.user_status;
               localStorage.setItem("registerstatus", response.user_status);
+            }, function (error) {
+              console.log(error);
+            });
+            console.log(this.registersts);
+            this.http.post('/user_register', Data).subscribe(function (response) {
+              console.log(response);
+              _this3.loginsts = response.user_status;
             }, function (error) {
               console.log(error);
             });
@@ -295,21 +283,6 @@
                   var encodeText = btoa(JSON.stringify(obj));
                   localStorage.setItem("24hrs-user-data", encodeText);
                   localStorage.setItem("loginstatus", response.user_status);
-                  var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 1000,
-                    timerProgressBar: true,
-                    didOpen: function didOpen(toast) {
-                      toast.addEventListener('mouseenter', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().stopTimer);
-                      toast.addEventListener('mouseleave', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().resumeTimer);
-                    }
-                  });
-                  Toast.fire({
-                    icon: 'success',
-                    title: 'Login successfully'
-                  });
                   console.log(_this4.registersts);
 
                   if (_this4.registersts == "1" || _this4.loginsts == "First Login" && _this4.loginsts != undefined) {
@@ -364,39 +337,39 @@
 
       _SigninPage.ctorParameters = function () {
         return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.ModalController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.ModalController
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.Router
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router
         }, {
           type: _shared_http_service__WEBPACK_IMPORTED_MODULE_2__.HttpService
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.ToastController
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.ToastController
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.ActivatedRoute
         }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.Platform
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.Platform
         }];
       };
 
-      _SigninPage = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+      _SigninPage = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-signin',
         template: _raw_loader_signin_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
-        animations: [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.trigger)('fadein', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.state)('void', (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.style)({
+        animations: [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.trigger)('fadein', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.state)('void', (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.style)({
           opacity: 0
-        })), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.transition)('void => *', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.style)({
+        })), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.transition)('void => *', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.style)({
           opacity: 0
-        }), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.animate)('900ms ease-out', (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.style)({
+        }), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.animate)('900ms ease-out', (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.style)({
           opacity: 1
-        }))])]), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.trigger)('slidelefttitle', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.transition)('void => *', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.style)({
+        }))])]), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.trigger)('slidelefttitle', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.transition)('void => *', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.style)({
           opacity: 0,
           transform: 'translateX(150%)'
-        }), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.animate)('900ms 300ms ease-out', (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.style)({
+        }), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.animate)('900ms 300ms ease-out', (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.style)({
           transform: 'translateX(0%)',
           opacity: 1
-        }))])]), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.trigger)('slideup', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.transition)('void => *', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.style)({
+        }))])]), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.trigger)('slideup', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.transition)('void => *', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.style)({
           opacity: 0,
           transform: 'translateY(150%)'
-        }), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.animate)('900ms 300ms ease-out', (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.style)({
+        }), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.animate)('900ms 300ms ease-out', (0, _angular_animations__WEBPACK_IMPORTED_MODULE_7__.style)({
           transform: 'translateY(0%)',
           opacity: 1
         }))])])],

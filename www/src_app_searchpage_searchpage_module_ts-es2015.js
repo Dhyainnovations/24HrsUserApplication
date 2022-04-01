@@ -350,7 +350,7 @@ let HttpService = class HttpService {
     post(serviceName, data) {
         const token = ((localStorage.getItem("token")));
         const url = _environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.baseUrl + serviceName;
-        if (serviceName == '/user_get_otp' || serviceName == '/user_verify_otp' || serviceName == '/user_register' || serviceName == '/user_login' || serviceName == 'list_offer_category') {
+        if (serviceName == '/user_get_otp' || serviceName == '/user_verify_otp' || serviceName == '/user_register' || serviceName == '/user_login') {
             const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders();
             const options = { headers: headers, withCredentials: false };
             return this.http.post(url, JSON.stringify(data), { headers: headers });

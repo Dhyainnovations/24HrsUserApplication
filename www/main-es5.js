@@ -109,7 +109,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_sweetalert2_dist_sweetalert2_all_js-src_app_shared_http_service_ts"), __webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs"), __webpack_require__.e("default-src_app_signin_signin_page_ts"), __webpack_require__.e("src_app_signin_signin_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs-src_app_shared_http_service_ts"), __webpack_require__.e("default-src_app_signin_signin_page_ts"), __webpack_require__.e("src_app_signin_signin_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./signin/signin.module */
           87445)).then(function (m) {
             return m.SigninPageModule;
@@ -120,7 +120,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs"), __webpack_require__.e("default-src_app_signup_signup_page_ts"), __webpack_require__.e("src_app_shared_http_service_ts-src_app_signup_signup_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs-src_app_shared_http_service_ts"), __webpack_require__.e("default-src_app_signup_signup_page_ts"), __webpack_require__.e("src_app_signup_signup_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./signup/signup.module */
           77648)).then(function (m) {
             return m.SignupPageModule;
@@ -131,7 +131,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_sweetalert2_dist_sweetalert2_all_js-src_app_shared_http_service_ts"), __webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs"), __webpack_require__.e("default-src_app_signin_signin_page_ts"), __webpack_require__.e("default-src_app_signup_signup_page_ts"), __webpack_require__.e("src_app_welcome_welcome_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs-src_app_shared_http_service_ts"), __webpack_require__.e("default-src_app_signin_signin_page_ts"), __webpack_require__.e("default-src_app_signup_signup_page_ts"), __webpack_require__.e("src_app_welcome_welcome_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./welcome/welcome.module */
           32526)).then(function (m) {
             return m.WelcomePageModule;
@@ -153,7 +153,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_sweetalert2_dist_sweetalert2_all_js-src_app_shared_http_service_ts"), __webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs"), __webpack_require__.e("src_app_support_support_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs-src_app_shared_http_service_ts"), __webpack_require__.e("default-node_modules_sweetalert2_dist_sweetalert2_all_js"), __webpack_require__.e("src_app_support_support_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./support/support.module */
           96758)).then(function (m) {
             return m.SupportPageModule;
@@ -186,7 +186,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() */
-          [__webpack_require__.e("default-node_modules_sweetalert2_dist_sweetalert2_all_js-src_app_shared_http_service_ts"), __webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs"), __webpack_require__.e("src_app_myalarms_myalarms_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
+          [__webpack_require__.e("default-node_modules_angular_animations_fesm2020_animations_mjs-src_app_shared_http_service_ts"), __webpack_require__.e("default-node_modules_sweetalert2_dist_sweetalert2_all_js"), __webpack_require__.e("src_app_myalarms_myalarms_module_ts")]).then(__webpack_require__.bind(__webpack_require__,
           /*! ./myalarms/myalarms.module */
           51881)).then(function (m) {
             return m.MyalarmsPageModule;
@@ -257,7 +257,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -275,21 +275,15 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! @angular/router */
-      39895);
-      /* harmony import */
-
-
-      var _codetrix_studio_capacitor_google_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! @codetrix-studio/capacitor-google-auth */
-      31543); // import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
+      39895); // import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 
 
       var _AppComponent = /*#__PURE__*/function () {
@@ -330,8 +324,6 @@
           value: function logout() {
             localStorage.clear();
             this.router.navigate(['/welcome']);
-
-            _codetrix_studio_capacitor_google_auth__WEBPACK_IMPORTED_MODULE_2__.GoogleAuth.signOut();
           }
         }]);
 
@@ -340,13 +332,13 @@
 
       _AppComponent.ctorParameters = function () {
         return [{
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.Router
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_2__.Router
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.ActivatedRoute
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_2__.ActivatedRoute
         }];
       };
 
-      _AppComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+      _AppComponent = (0, tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
         selector: 'app-root',
         template: _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_app_component_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]

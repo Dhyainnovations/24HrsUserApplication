@@ -1,15 +1,5 @@
-package com.hrsuser.app;
-import android.os.Bundle; 
+package com.sellermobo.app;
+
 import com.getcapacitor.BridgeActivity;
-import com.getcapacitor.Plugin; 
-import java.util.ArrayList;
 
-
-
-
-public class MainActivity extends BridgeActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-
-  }
-}
+public class MainActivity extends BridgeActivity {}

@@ -142,7 +142,7 @@ let MyalarmsPage = class MyalarmsPage {
     }
     //-------------- Navigate to setalarmpage  ----------//
     newAlarm() {
-        this.router.navigate(['/tabs/tab2']);
+        this.router.navigate(['/setalarm']);
     }
     //-------------- Get alarm List Api func  ----------//
     getAlarmList() {

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 // import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 import { ActivatedRoute } from '@angular/router';
-// import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 
 @Component({
@@ -35,10 +34,7 @@ export class AppComponent {
   logout() {
     
     localStorage.clear()
-    this.router.navigate(['/welcome'])    
-    // GoogleAuth.signOut();
-
-    
+    this.router.navigate(['/welcome'])
   }
 
   // ScheduleNotification() {

@@ -615,7 +615,7 @@
             var token = localStorage.getItem("token");
             var url = _environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.baseUrl + serviceName;
 
-            if (serviceName == '/user_get_otp' || serviceName == '/user_verify_otp' || serviceName == '/user_register' || serviceName == '/user_login' || serviceName == 'list_offer_category') {
+            if (serviceName == '/user_get_otp' || serviceName == '/user_verify_otp' || serviceName == '/user_register' || serviceName == '/user_login') {
               var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders();
               var options = {
                 headers: headers,

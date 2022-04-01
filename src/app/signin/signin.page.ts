@@ -152,7 +152,7 @@ export class SigninPage implements OnInit {
 
     console.log(this.registersts);
     //--------------- Register Api ------------//
-    this.http.post('/register_using_mobile', Data).subscribe((response: any) => {
+    this.http.post('/user_register', Data).subscribe((response: any) => {
       console.log(response);
       this.loginsts = response.user_status
 
@@ -214,8 +214,7 @@ export class SigninPage implements OnInit {
 
       if (response.success == "true") {
         this.dismiss()
-        alert("VErified")
-        this.http.post('/login_using_mobile', Data).subscribe((response: any) => {
+        this.http.post('/user_login', Data).subscribe((response: any) => {
           console.log(response);
           localStorage.setItem("token", response.token)
           localStorage.setItem("tbid", response.tbid)
@@ -304,8 +303,5 @@ export class SigninPage implements OnInit {
   navigateToLocal() {
     this.router.navigate(['/home'])
   }
-  signup(){
-    this.router.navigate(['/register'])
-    this.dismiss();
-  }
+
 }

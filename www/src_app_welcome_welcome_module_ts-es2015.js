@@ -92,16 +92,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "WelcomePage": function() { return /* binding */ WelcomePage; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 64762);
 /* harmony import */ var _raw_loader_welcome_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./welcome.page.html */ 62553);
 /* harmony import */ var _welcome_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./welcome.page.scss */ 62447);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 37716);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 80476);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 80476);
 /* harmony import */ var _signin_signin_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../signin/signin.page */ 61895);
 /* harmony import */ var _signup_signup_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../signup/signup.page */ 80771);
-/* harmony import */ var _codetrix_studio_capacitor_google_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @codetrix-studio/capacitor-google-auth */ 31543);
-
-
 
 
 
@@ -110,19 +107,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let WelcomePage = class WelcomePage {
-    constructor(modalCtrl, platform) {
+    constructor(modalCtrl) {
         this.modalCtrl = modalCtrl;
-        this.platform = platform;
-        this.googleUser = "";
-        this.userInfo = "";
-        this.platform.ready().then(() => (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
-            _codetrix_studio_capacitor_google_auth__WEBPACK_IMPORTED_MODULE_4__.GoogleAuth.initialize();
-        }));
     }
     ngOnInit() {
     }
     login() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
             const modal = yield this.modalCtrl.create({
                 component: _signin_signin_page__WEBPACK_IMPORTED_MODULE_2__.SigninPage,
                 animated: true,
@@ -133,15 +124,8 @@ let WelcomePage = class WelcomePage {
             return yield modal.present();
         });
     }
-    googleSignup() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
-            this.googleUser = (yield _codetrix_studio_capacitor_google_auth__WEBPACK_IMPORTED_MODULE_4__.GoogleAuth.signIn());
-            console.log('my user: ', this.googleUser);
-            this.userInfo = this.googleUser;
-        });
-    }
     register() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
             const modal = yield this.modalCtrl.create({
                 component: _signup_signup_page__WEBPACK_IMPORTED_MODULE_3__.SignupPage,
                 animated: true,
@@ -152,18 +136,12 @@ let WelcomePage = class WelcomePage {
             return yield modal.present();
         });
     }
-    logout() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, function* () {
-            console.log("Logout");
-        });
-    }
 };
 WelcomePage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.ModalController },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.Platform }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.ModalController }
 ];
-WelcomePage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+WelcomePage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-welcome',
         template: _raw_loader_welcome_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_welcome_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -194,7 +172,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n\n</ion-header>\n\n<ion-content class=\"ion-padding ion-text-center\" color=\"\">\n    <img src=\"assets/logo.jpeg\" class=\"logo\" />\n\n    \n  <div class=\"welcomecard\">\n    <div class=\"title\">\n      <h2>Welcome</h2>\n      <p>Enjoy the 24hrs  App</p>\n  </div>\n\n  <div class=\"ion-margin-top mb-4\">\n      <ion-button  class=\"ion-margin-top\"  fill=\"outline\" color=\"dark\" (click)=\"googleSignup()\">\n        <img height=\"25px\" width=\"25px\" src=\"assets/googlelogo.png\" alt=\"\" >\n        \n        <span style=\"margin-top: 4px;\">LOGIN WITH GOOGLE</span></ion-button>\n      <ion-button  class=\"ion-margin-top\" (click)=\"login()\" color=\"dark\">\n        <svg style=\"margin:5px;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"14\" fill=\"currentColor\" class=\"bi bi-tablet\" viewBox=\"0 0 16 16\">\n          <path d=\"M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z\"/>\n          <path d=\"M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z\"/>\n        </svg>\n         LOGIN WITH MOBILE</ion-button>\n         <ion-button (click)=\"logout()\">Logout</ion-button>\n  </div>\n  </div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n\n</ion-header>\n\n<ion-content class=\"ion-padding ion-text-center\" color=\"\">\n    <img src=\"assets/logo.jpeg\" class=\"logo\" />\n\n    \n  <div class=\"welcomecard\">\n    <div class=\"title\">\n      <h2>Welcome</h2>\n      <p>Enjoy the 24hrs  App</p>\n  </div>\n\n  <div class=\"ion-margin-top mb-4\">\n      <ion-button  class=\"ion-margin-top\"  fill=\"outline\" color=\"dark\">\n        <img height=\"25px\" width=\"25px\" src=\"assets/googlelogo.png\" alt=\"\">\n        \n        <span style=\"margin-top: 4px;\">LOGIN WITH GOOGLE</span></ion-button>\n      <ion-button  class=\"ion-margin-top\" (click)=\"login()\" color=\"dark\">\n        <svg style=\"margin:5px;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"14\" fill=\"currentColor\" class=\"bi bi-tablet\" viewBox=\"0 0 16 16\">\n          <path d=\"M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z\"/>\n          <path d=\"M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z\"/>\n        </svg>\n         LOGIN WITH MOBILE</ion-button>\n  </div>\n  </div>\n</ion-content>\n");
 
 /***/ })
 

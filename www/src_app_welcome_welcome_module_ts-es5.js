@@ -179,7 +179,7 @@
       /* harmony import */
 
 
-      var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! tslib */
       64762);
       /* harmony import */
@@ -197,13 +197,13 @@
       /* harmony import */
 
 
-      var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/core */
       37716);
       /* harmony import */
 
 
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @ionic/angular */
       80476);
       /* harmony import */
@@ -218,39 +218,12 @@
       var _signup_signup_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! ../signup/signup.page */
       80771);
-      /* harmony import */
-
-
-      var _codetrix_studio_capacitor_google_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-      /*! @codetrix-studio/capacitor-google-auth */
-      31543);
 
       var _WelcomePage = /*#__PURE__*/function () {
-        function WelcomePage(modalCtrl, platform) {
-          var _this = this;
-
+        function WelcomePage(modalCtrl) {
           _classCallCheck(this, WelcomePage);
 
           this.modalCtrl = modalCtrl;
-          this.platform = platform;
-          this.googleUser = "";
-          this.userInfo = "";
-          this.platform.ready().then(function () {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      _codetrix_studio_capacitor_google_auth__WEBPACK_IMPORTED_MODULE_4__.GoogleAuth.initialize();
-
-                    case 1:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee);
-            }));
-          });
         }
 
         _createClass(WelcomePage, [{
@@ -259,7 +232,41 @@
         }, {
           key: "login",
           value: function login() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              var modal;
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      _context.next = 2;
+                      return this.modalCtrl.create({
+                        component: _signin_signin_page__WEBPACK_IMPORTED_MODULE_2__.SigninPage,
+                        animated: true,
+                        mode: 'ios',
+                        backdropDismiss: false,
+                        cssClass: 'login-modal'
+                      });
+
+                    case 2:
+                      modal = _context.sent;
+                      _context.next = 5;
+                      return modal.present();
+
+                    case 5:
+                      return _context.abrupt("return", _context.sent);
+
+                    case 6:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this);
+            }));
+          }
+        }, {
+          key: "register",
+          value: function register() {
+            return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
               var modal;
               return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
@@ -267,11 +274,11 @@
                     case 0:
                       _context2.next = 2;
                       return this.modalCtrl.create({
-                        component: _signin_signin_page__WEBPACK_IMPORTED_MODULE_2__.SigninPage,
+                        component: _signup_signup_page__WEBPACK_IMPORTED_MODULE_3__.SignupPage,
                         animated: true,
                         mode: 'ios',
                         backdropDismiss: false,
-                        cssClass: 'login-modal'
+                        cssClass: 'register-modal'
                       });
 
                     case 2:
@@ -290,82 +297,6 @@
               }, _callee2, this);
             }));
           }
-        }, {
-          key: "googleSignup",
-          value: function googleSignup() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-              return regeneratorRuntime.wrap(function _callee3$(_context3) {
-                while (1) {
-                  switch (_context3.prev = _context3.next) {
-                    case 0:
-                      _context3.next = 2;
-                      return _codetrix_studio_capacitor_google_auth__WEBPACK_IMPORTED_MODULE_4__.GoogleAuth.signIn();
-
-                    case 2:
-                      this.googleUser = _context3.sent;
-                      console.log('my user: ', this.googleUser);
-                      this.userInfo = this.googleUser;
-
-                    case 5:
-                    case "end":
-                      return _context3.stop();
-                  }
-                }
-              }, _callee3, this);
-            }));
-          }
-        }, {
-          key: "register",
-          value: function register() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-              var modal;
-              return regeneratorRuntime.wrap(function _callee4$(_context4) {
-                while (1) {
-                  switch (_context4.prev = _context4.next) {
-                    case 0:
-                      _context4.next = 2;
-                      return this.modalCtrl.create({
-                        component: _signup_signup_page__WEBPACK_IMPORTED_MODULE_3__.SignupPage,
-                        animated: true,
-                        mode: 'ios',
-                        backdropDismiss: false,
-                        cssClass: 'register-modal'
-                      });
-
-                    case 2:
-                      modal = _context4.sent;
-                      _context4.next = 5;
-                      return modal.present();
-
-                    case 5:
-                      return _context4.abrupt("return", _context4.sent);
-
-                    case 6:
-                    case "end":
-                      return _context4.stop();
-                  }
-                }
-              }, _callee4, this);
-            }));
-          }
-        }, {
-          key: "logout",
-          value: function logout() {
-            return (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-              return regeneratorRuntime.wrap(function _callee5$(_context5) {
-                while (1) {
-                  switch (_context5.prev = _context5.next) {
-                    case 0:
-                      console.log("Logout");
-
-                    case 1:
-                    case "end":
-                      return _context5.stop();
-                  }
-                }
-              }, _callee5);
-            }));
-          }
         }]);
 
         return WelcomePage;
@@ -373,13 +304,11 @@
 
       _WelcomePage.ctorParameters = function () {
         return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.ModalController
-        }, {
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.Platform
+          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.ModalController
         }];
       };
 
-      _WelcomePage = (0, tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+      _WelcomePage = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-welcome',
         template: _raw_loader_welcome_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_welcome_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
@@ -419,7 +348,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n\n</ion-header>\n\n<ion-content class=\"ion-padding ion-text-center\" color=\"\">\n    <img src=\"assets/logo.jpeg\" class=\"logo\" />\n\n    \n  <div class=\"welcomecard\">\n    <div class=\"title\">\n      <h2>Welcome</h2>\n      <p>Enjoy the 24hrs  App</p>\n  </div>\n\n  <div class=\"ion-margin-top mb-4\">\n      <ion-button  class=\"ion-margin-top\"  fill=\"outline\" color=\"dark\" (click)=\"googleSignup()\">\n        <img height=\"25px\" width=\"25px\" src=\"assets/googlelogo.png\" alt=\"\" >\n        \n        <span style=\"margin-top: 4px;\">LOGIN WITH GOOGLE</span></ion-button>\n      <ion-button  class=\"ion-margin-top\" (click)=\"login()\" color=\"dark\">\n        <svg style=\"margin:5px;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"14\" fill=\"currentColor\" class=\"bi bi-tablet\" viewBox=\"0 0 16 16\">\n          <path d=\"M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z\"/>\n          <path d=\"M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z\"/>\n        </svg>\n         LOGIN WITH MOBILE</ion-button>\n         <ion-button (click)=\"logout()\">Logout</ion-button>\n  </div>\n  </div>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header>\n\n</ion-header>\n\n<ion-content class=\"ion-padding ion-text-center\" color=\"\">\n    <img src=\"assets/logo.jpeg\" class=\"logo\" />\n\n    \n  <div class=\"welcomecard\">\n    <div class=\"title\">\n      <h2>Welcome</h2>\n      <p>Enjoy the 24hrs  App</p>\n  </div>\n\n  <div class=\"ion-margin-top mb-4\">\n      <ion-button  class=\"ion-margin-top\"  fill=\"outline\" color=\"dark\">\n        <img height=\"25px\" width=\"25px\" src=\"assets/googlelogo.png\" alt=\"\">\n        \n        <span style=\"margin-top: 4px;\">LOGIN WITH GOOGLE</span></ion-button>\n      <ion-button  class=\"ion-margin-top\" (click)=\"login()\" color=\"dark\">\n        <svg style=\"margin:5px;\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"14\" fill=\"currentColor\" class=\"bi bi-tablet\" viewBox=\"0 0 16 16\">\n          <path d=\"M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z\"/>\n          <path d=\"M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z\"/>\n        </svg>\n         LOGIN WITH MOBILE</ion-button>\n  </div>\n  </div>\n</ion-content>\n";
       /***/
     }
   }]);

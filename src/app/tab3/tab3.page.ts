@@ -51,7 +51,6 @@ export class Tab3Page {
       this.PopupModel = false;
       this.getSelectCategory()
       this.locationList()
-      this.UserDetails()
     });
   }
 
@@ -69,30 +68,6 @@ export class Tab3Page {
   updateUsername: any ;
   updateMobile: any = this.userdetails.mobile;
   getCategoryList: any = [];
-
-
-
-  loginUserTbid:any;
-  loginUserName:any;
-  loginUserNumber:any;
-  loginUserLocation:any;
-  loginUserToken:any;
-
-  UserDetails() {
-   
-    this.http.get('/user_details',).subscribe((response: any) => {
-      console.log(response);
-      this.loginUserTbid = response.records.user_name;
-      this.loginUserName = response.records.user_name;
-      this.loginUserNumber = response.records.user_name;
-      this.loginUserLocation = response.records.user_name;
-      this.loginUserToken = response.records.user_name;
-      
-    }, (error: any) => {
-      console.log(error);
-    });
-    
-  }
 
   //-------------- Navigate to supportPage ----------//
   support() {
@@ -116,7 +91,7 @@ export class Tab3Page {
   updateProfile() {
     const updateData = {
       tbid: this.userdetails.id,
-      user_name: this.loginUserName,
+      user_name: this.updateUsername,
       mobile_number: this.updateMobile,
       location:this.city
       
