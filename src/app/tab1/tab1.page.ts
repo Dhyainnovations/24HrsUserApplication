@@ -15,22 +15,23 @@ import { trigger, style, state, animate, transition } from '@angular/animations'
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit, OnDestroy {
-  constructor( private router: Router, private activatedRoute: ActivatedRoute, private http: HttpService, route: ActivatedRoute, public popoverController: PopoverController) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpService, route: ActivatedRoute, public popoverController: PopoverController) {
     route.params.subscribe(val => {
       this.getSelectCategory()
-      this.offerList()
       this.locationList()
       this.expiryOfferList()
       this.UserDetails()
+
     });
   }
 
   ngOnInit() {
-    
+    this.GetOtherofferList();
     this.offerList()
     this.start()
     console.log(this.userdetails);
-    
+    console.log(this.whatsapp_href);
+
   }
   ngOnDestroy() { this.clearTimer(); }
 
@@ -39,7 +40,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   seconds = 11;
   hour = 1;
 
-  city:any = "coimbatore";
+  city: any;
 
   clearTimer() { clearInterval(this.intervalId); }
   start() { this.countDown(); }
@@ -62,18 +63,21 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
 
-  username :any = (localStorage.getItem("userName"));
+  username: any = (localStorage.getItem("userName"));
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
   slideName: any = 'Home';
   isvisible: any = false;
+  IfOfferPresent: any;
   deliveryAvilability: any;
   popUpisvisible: any = false;
   productDetails: any = true;
+  IfOtherOfferPresent: any;
   storedetailsVisible: any = false;
   noDataFound: any = false;
-  ExpirynoDataFound:any = true;
+  ExpirynoDataFound: any = true;
   offerListVisible: any = true;
   getCategoryList: any = [];
+  other_offer: any;
   offerlist: any = [];
   offerView: any = []
   storedetails: any = []
@@ -100,29 +104,33 @@ export class Tab1Page implements OnInit, OnDestroy {
   spam_msg: any;
   store: any;
   offer_denied: any;
-  locationChangeVisible:any = false;
-  unit:any;
-
-  loginUserTbid:any;
-  loginUserName:any;
-  loginUserNumber:any;
-  loginUserLocation:any;
-  loginUserToken:any;
+  locationChangeVisible: any = false;
+  unit: any;
+  otherofferlist: any = [];
+  loginUserTbid: any;
+  loginUserName: any;
+  loginUserNumber: any;
+  loginUserLocation: any;
+  loginUserToken: any;
 
   UserDetails() {
-   
+
     this.http.get('/user_details',).subscribe((response: any) => {
       console.log(response);
       this.loginUserTbid = response.records.user_name;
-      this.loginUserName = response.records.user_name;
+      if (response.records.user_name == null) {
+        this.loginUserName = "User";
+      } else {
+        this.loginUserName = response.records.user_name;
+      }
       this.loginUserNumber = response.records.user_name;
       this.loginUserLocation = response.records.user_name;
       this.loginUserToken = response.records.user_name;
-      
+
     }, (error: any) => {
       console.log(error);
     });
-    
+
   }
 
 
@@ -239,17 +247,33 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.productDetails = true
     this.http.get('/readone_offer_user?o=' + o).subscribe((response: any) => {
       if (response.success == "true") {
+        console.log(response);
         this.storeTbid = response.records.tbid
         this.storeLogo = response.records.store_logo
         this.storeName = response.records.store_name
         this.productName = response.records.product
         this.productImage = response.records.product_image
         this.description = response.records.description
-        this.offer = response.records.offer
+        this.offer = response.records.product_weight
         this.totalPrice = response.records.total_cost
         this.offerPrice = response.records.offer_price
+        this.other_offer = response.records.other_offer
         this.offerTime = response.records.offer_time,
+          this.whatsapp_status = response.records.seller_toggle.whatsapp;
+        this.instagram_status = response.records.seller_toggle.instagram;
+        this.website_status = response.records.seller_toggle.website;
+        this.facebook_status = response.records.seller_toggle.facebook;
+        this.youtube_status = response.records.seller_toggle.youtube;
+        this.contact_status = response.records.seller_toggle.contact_number;
+
         this.unit = response.records.product_unit
+        if (this.other_offer == "") {
+          this.IfOfferPresent = true;
+          this.IfOtherOfferPresent = false;
+        } else {
+          this.IfOfferPresent = false;
+          this.IfOtherOfferPresent = true;
+        }
       }
 
     }, (error: any) => {
@@ -257,7 +281,14 @@ export class Tab1Page implements OnInit, OnDestroy {
     });
   }
 
-
+  whatsapp_status: any = true;
+  instagram_status: any = true;
+  website_status: any = true;
+  facebook_status: any = true;
+  youtube_status: any = true;
+  contact_status: any = true;
+  youtube: any;
+  facebook: any;
   //---------------Get Store Details  Api call -------------//
   storeDetails(storename) {
     this.storedetailsVisible = true;
@@ -273,11 +304,21 @@ export class Tab1Page implements OnInit, OnDestroy {
       this.whatsApp = response.records.whatsapp
       this.contact = response.records.contact_number
       this.instagram = response.records.instagram
+      this.youtube = response.records.youtube
+      this.facebook = response.records.facebook
       this.storeID = response.records.tbid
       this.storeLogo = response.records.store_logo
       this.deliveryAvilability = response.records.delivery_availability
 
-      if (this.deliveryAvilability == 1 && this.deliveryAvilability == false && this.deliveryAvilability == "Available" ) {
+      this.whatsapp_href = "whatsapp://send?text=HelloWorld";
+      console.log(this.whatsapp_href);
+
+      this.instagram_href = "instagram://user?username=" + response.records.instagram;
+      this.youtube_href = response.records.youtube;
+      this.facebook_href = "https://www.facebook.com/" + response.records.facebook + "/"
+
+
+      if (this.deliveryAvilability == 1 && this.deliveryAvilability == false && this.deliveryAvilability == "Available") {
         this.deliveryAvilability = false
       } else {
         this.deliveryAvilability = true
@@ -288,7 +329,10 @@ export class Tab1Page implements OnInit, OnDestroy {
       }
     );
   }
-
+  youtube_href: any;
+  whatsapp_href: any = "https://api.whatsapp.com/send?phone=7598297335";
+  instagram_href: any;
+  facebook_href: any;
   //-------------- Navigate to dashboard ----------//
   navigateHome() {
     this.storedetailsVisible = false;
@@ -297,7 +341,7 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   }
 
- 
+
 
   //-------------- Navigate to searchPage ----------//
   searchPage() {
@@ -326,17 +370,34 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   //------------- get offer list -----------//
-  offerList() {
+  GetOtherofferList() {
+    this.otherofferlist = [];
     const data = {
-      city:this.city
+      city: this.city
     }
-
     this.http.post('/list_all_offer', data).subscribe((response: any) => {
-      this.offerlist = response.records;
+      console.log(response.records);
+      for (var i = 0; i < response.records.length; i++) {
+        if (response.records[i].other_offer != "") {
+          const data = {
+            product_image: response.records[i].product_image,
+            store_name: response.records[i].store_name,
+            offer_time: response.records[i].offer_time,
+            total_cost: response.records[i].total_cost,
+            product: response.records[i].product,
+            product_unit: response.records[i].product_unit,
+            other_offer: response.records[i].other_offer,
+            product_weight: response.records[i].product_weight,
+            tbid: response.records[i].tbid
+          }
+          console.log(this.otherofferlist);
+          this.otherofferlist.push(data);
+        }
+      }
       console.log(this.offerlist);
-      if(response.message == "No offers found."){
+      if (response.message == "No offers found.") {
         this.noDataFound = true;
-      }else{
+      } else {
         this.noDataFound = false;
       }
 
@@ -346,12 +407,58 @@ export class Tab1Page implements OnInit, OnDestroy {
     }
     );
   }
-  expiryofferlist:any = []
-   //------------- get offer list -----------//
-   expiryOfferList() {
-   
 
-    this.http.get('/list_offer_expiry', ).subscribe((response: any) => {
+
+
+  offerList() {
+    this.offerlist = [];
+    const data = {
+      city: this.city
+    }
+    this.http.post('/list_all_offer', data).subscribe((response: any) => {
+      console.log(response.records);
+      for (var i = 0; i < response.records.length; i++) {
+        if (response.records[i].offer != "") {
+          const data = {
+            store_name: response.records[i].store_name,
+            product_image: response.records[i].product_image,
+            offer_time: response.records[i].offer_time,
+            total_cost: response.records[i].total_cost,
+            product: response.records[i].product,
+            product_unit: response.records[i].product_unit,
+            offer: response.records[i].offer,
+            offer_price: response.records[i].offer_price,
+            tbid: response.records[i].tbid,
+            product_weight: response.records[i].product_weight
+          }
+          console.log(this.offerlist);
+          this.offerlist.push(data);
+        }
+      }
+      console.log(this.offerlist);
+      if (response.message == "No offers found.") {
+        this.noDataFound = true;
+      } else {
+        this.noDataFound = false;
+      }
+
+    }, (error: any) => {
+      console.log(error);
+      this.noDataFound = true;
+    }
+    );
+  }
+
+
+
+
+  expiryofferlist: any = []
+  //------------- get offer list -----------//
+  expiryOfferList() {
+
+
+    this.http.get('/list_offer_expiry',).subscribe((response: any) => {
+      this.ExpirynoDataFound = false;
       this.expiryofferlist = response.records;
       console.log(this.expiryofferlist);
       // if(response.message == "No offers found."){
@@ -362,7 +469,7 @@ export class Tab1Page implements OnInit, OnDestroy {
 
     }, (error: any) => {
       console.log(error);
-      // this.noDataFound = true;
+      this.ExpirynoDataFound = false;
     }
     );
   }
@@ -374,7 +481,8 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.offerListVisible = true;
     this.noDataFound = false;
     this.isvisible = false
-    this.offerList()
+    this.offerList();
+    this.GetOtherofferList();
   }
 
 
@@ -387,11 +495,12 @@ export class Tab1Page implements OnInit, OnDestroy {
       this.offerListVisible = true;
       this.noDataFound = false;
       this.offerList()
+      this.GetOtherofferList();
     }
 
     const obj = {
       store_category_id: item,
-      city:this.city
+      city: this.city
 
     }
     this.http.post('/list_offer_category', obj).subscribe((response: any) => {
@@ -412,33 +521,38 @@ export class Tab1Page implements OnInit, OnDestroy {
     );
   }
 
-  locationsList:any = []
+  locationsList: any = []
   locationList() {
-   
+    this.locationsList = [];
     this.http.get('/list_location',).subscribe((response: any) => {
       console.log(response);
-      this.locationsList = response.records
+      for (var i = 0; i <= response.records.length; i++) {
+        if (response.records[i].city != null) {
+          this.locationsList.push(response.records[i])
+        }
+      }
+
       console.log(response.records.city);
-      
+
     }, (error: any) => {
       console.log(error);
     });
-    
+
   }
 
-  changeLocation(){
+  changeLocation() {
     console.log(this.city);
-    
-    if(this.city == "All"){
-      this.http.get('/list_all_offer', ).subscribe((response: any) => {
+
+    if (this.city == "All") {
+      this.http.get('/list_all_offer',).subscribe((response: any) => {
         this.offerlist = response.records;
         console.log(this.offerlist);
-        if(response.message == "No offers found."){
+        if (response.message == "No offers found.") {
           this.noDataFound = true;
-        }else{
+        } else {
           this.noDataFound = false;
         }
-  
+
       }, (error: any) => {
         console.log(error);
         this.noDataFound = true;
@@ -447,11 +561,11 @@ export class Tab1Page implements OnInit, OnDestroy {
     }
   }
 
-  locationChange(){
-   this.locationChangeVisible = !this.locationChangeVisible;
+  locationChange() {
+    this.locationChangeVisible = !this.locationChangeVisible;
   }
- 
-  testSlide(){
+
+  testSlide() {
     this.router.navigate(['/slide-test'])
   }
 

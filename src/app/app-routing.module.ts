@@ -60,6 +60,22 @@ const routes: Routes = [
     path: 'faq',
     loadChildren: () => import('./faq/faq.module').then(m => m.FaqPageModule)
   },
+  {
+    path: 'otp',
+    loadChildren: () => import('./otp/otp.module').then( m => m.OtpPageModule)
+  },
+  {
+    path: 'forgotpassword',
+    loadChildren: () => import('./forgotpassword/forgotpassword.module').then( m => m.ForgotpasswordPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'username-login',
+    loadChildren: () => import('./username-login/username-login.module').then( m => m.UsernameLoginPageModule)
+  },
 
 ];
 @NgModule({

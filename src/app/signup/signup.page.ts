@@ -47,14 +47,13 @@ export class SignupPage implements OnInit {
   constructor(private router: Router, private http: HttpService,
     private toastCtrl: ToastController, public popoverController: PopoverController, private route: ActivatedRoute) {
 
-    this.route.queryParams.subscribe(queryParams => {
-      this.locationList()
-    });
+    this.locationList();
   }
 
 
   ngOnInit() {
     this.locationList()
+    this.UserDetails();
   }
 
 
@@ -63,15 +62,19 @@ export class SignupPage implements OnInit {
 
   city: any;
   userName: any = "";
-  mobileNumber: any ;
+  mobileNumber: any;
 
 
   locationsList: any = []
   locationList() {
-
+    this.locationsList = [];
     this.http.get('/list_location',).subscribe((response: any) => {
       console.log(response);
-      this.locationsList = response.records
+      for (var i = 0; i <= response.records.length; i++) {
+        if (response.records[i].city != null) {
+          this.locationsList.push(response.records[i])
+        }
+      }
       console.log(response.records.city);
 
     }, (error: any) => {
@@ -79,6 +82,24 @@ export class SignupPage implements OnInit {
     });
   }
 
+
+
+  UserDetails() {
+
+    this.http.get('/user_details',).subscribe((response: any) => {
+      console.log(response);
+      if (response.records.user_name == null) {
+        this.userName = "User";
+      } else {
+        this.userName = response.records.user_name;
+      }
+      this.mobileNumber = response.records.mobile_number;
+
+    }, (error: any) => {
+      console.log(error);
+    });
+
+  }
 
 
   userDetailsUpload() {

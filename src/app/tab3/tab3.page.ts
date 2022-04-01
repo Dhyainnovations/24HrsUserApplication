@@ -51,23 +51,52 @@ export class Tab3Page {
       this.PopupModel = false;
       this.getSelectCategory()
       this.locationList()
+      this.UserDetails()
     });
   }
 
   ngOnInit() {
-   
+
 
   }
 
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
   city: any = ((localStorage.getItem("location")));
-  mobileNumber:any = ((localStorage.getItem("mobilenumber")));
+  mobileNumber: any = ((localStorage.getItem("mobilenumber")));
   locationsList: any = []
   PopupModel: any = false;
   password: any = ''
-  updateUsername: any ;
+  updateUsername: any;
   updateMobile: any = this.userdetails.mobile;
   getCategoryList: any = [];
+
+
+
+  loginUserTbid: any;
+  loginUserName: any;
+  loginUserNumber: any;
+  loginUserLocation: any;
+  loginUserToken: any;
+
+  UserDetails() {
+
+    this.http.get('/user_details',).subscribe((response: any) => {
+      console.log(response);
+      this.loginUserTbid = response.records.tbid;
+      if (response.records.user_name == null) {
+        this.loginUserName = "User";
+      } else {
+        this.loginUserName = response.records.user_name;
+      }
+      this.loginUserNumber = response.records.mobile_number;
+      this.loginUserLocation = response.records.location;
+      this.loginUserToken = response.records.token;
+
+    }, (error: any) => {
+      console.log(error);
+    });
+
+  }
 
   //-------------- Navigate to supportPage ----------//
   support() {
@@ -91,15 +120,15 @@ export class Tab3Page {
   updateProfile() {
     const updateData = {
       tbid: this.userdetails.id,
-      user_name: this.updateUsername,
+      user_name: this.loginUserName,
       mobile_number: this.updateMobile,
-      location:this.city
-      
+      location: this.city
+
     }
 
     console.log(updateData);
-    
-    this.http.post('/user_update_profile',updateData).subscribe((response: any) => {
+
+    this.http.post('/user_update_profile', updateData).subscribe((response: any) => {
       console.log(response);
       if (response.success == "true") {
         this.updateUsername = response.user_name
@@ -248,19 +277,22 @@ export class Tab3Page {
   }
 
 
-  
-  
-  locationList() {
 
+
+  locationList() {
+    this.locationsList = [];
     this.http.get('/list_location',).subscribe((response: any) => {
       console.log(response);
-      this.locationsList = response.records
-      console.log(response.records.city);
+      for (var i = 0; i <= response.records.length; i++) {
+        if (response.records[i].city != null) {
+          this.locationsList.push(response.records[i])
+        }
+      }
 
     }, (error: any) => {
       console.log(error);
     });
   }
 
- 
+
 }
