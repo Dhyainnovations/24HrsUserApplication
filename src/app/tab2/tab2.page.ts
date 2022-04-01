@@ -86,7 +86,7 @@ export class Tab2Page {
 
   storeLogForStore: any;
   storeNameForSrore: any;
-  storeID:any
+  storeID: any
 
 
   searchPage() {
@@ -117,19 +117,13 @@ export class Tab2Page {
 
 
   selectStoreForProductSetAlarm() {
+    this.productNameList = []
     this.isVisible = true;
     this.storeIdUseOfProductSetAlarm = name
-
-
-    // var formData = new FormData();
-    // formData.append('store_name', this.storeTbid);
-    // console.log('formData: ', formData.getAll('store_name'));
 
     const obj = {
       store_id: this.storeTbid
     }
-    
-
     this.http.post('/product_list_user', obj).subscribe((response: any) => {
       console.log(response);
       this.productNameList = response.records
@@ -141,8 +135,10 @@ export class Tab2Page {
   setAlarmForProduct() {
 
     const obj = {
-      store_name: this.storeTbid,
-      product: this.productTbid
+      store_id: this.storeTbid,
+      store_category_id: this.store_category_tbid,
+      category_id:  this.category_tbid,
+      product_id: this.productTbid
     }
     console.log(obj);
 
@@ -193,30 +189,31 @@ export class Tab2Page {
     });
   }
 
-
+  category_tbid: any;
+  store_category_tbid: any;
   selectProductToSetAlarm(name) {
     this.selectProductName = name;
     console.log(name);
     const s = name
-
     this.http.get('/product_search_user?s=' + s).subscribe((response: any) => {
-      if (response.success == "true") {
-        this.selectProductName = name;
-        console.log(response);
-        this.storeLogo = response.records.store_logo
-        this.storeName = response.records.store_name
-        this.productName = response.records.product_name
-        this.productImage = response.records.product_image
-        this.description = response.records.description
-        this.offerTime = response.records.offer_time
-        this.weight = response.records.weight
-        this.unit = response.records.unit
-        this.totalCost = response.records.total_cost
-        this.offerPrice = response.records.offer_price
-        this.productTbid = response.records.tbid
-        this.isVisibleForProduct = false
-        this.resultProductCardVisible = true;
-      }
+      console.log(response.records[0]);
+
+      this.category_tbid =response.records[0].category_id;
+      this.store_category_tbid =response.records[0].store_category_id;
+      this.selectProductName = name;
+      this.storeLogo = response.records[0].store_logo
+      this.storeName = response.records[0].store_name
+      this.productName = response.records[0].product_name
+      this.productImage = response.records[0].product_image
+      this.description = response.records[0].description
+      this.offerTime = response.records[0].offer_time
+      this.weight = response.records[0].weight
+      this.unit = response.records[0].unit
+      this.totalCost = response.records[0].cost
+      this.offerPrice = response.records[0].offer_price
+      this.productTbid = response.records[0].tbid
+      this.isVisibleForProduct = false
+      this.resultProductCardVisible = true;
 
 
     }, (error: any) => {
@@ -228,7 +225,6 @@ export class Tab2Page {
   }
 
   storeList() {
-   
     console.log(this.getStoreList);
     this.http.get('/list_stores',).subscribe((response: any) => {
       console.log(response);
@@ -242,10 +238,10 @@ export class Tab2Page {
 
   searchStore() {
     this.isVisible = true;
-   
+    this.resultStoreCardVisible = false
   }
-
-  selectStoreForGetStoreDetails(tbid,name) {
+  storetbidstore: any;
+  selectStoreForGetStoreDetails(tbid, name) {
     this.isVisible = false
     this.selectStore = name;
     this.storeID = tbid;
@@ -262,6 +258,7 @@ export class Tab2Page {
 
         this.storeLogForStore = response.records.store_logo
         this.storeNameForSrore = response.records.store_name
+        this.storetbidstore = response.records.tbid
 
       }
 
@@ -272,9 +269,9 @@ export class Tab2Page {
   }
 
   setAlarmForStore() {
-    console.log(this.storeId);
+    console.log(this.storetbidstore);
     const obj = {
-      store_name: this.storeID
+      store_id: this.storetbidstore
     }
     console.log(obj);
 
@@ -282,6 +279,7 @@ export class Tab2Page {
       console.log(response);
       if (response.success == "true") {
         this.selectStore = ''
+        this.resultProductCardVisible = false;
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -330,28 +328,28 @@ export class Tab2Page {
 
   }
 
-  productSearchBasedOnStore() {
-    this.isVisibleForProduct = true;
-    this.isVisible = false;
+  // productSearchBasedOnStore() {
+  //   this.isVisibleForProduct = true;
+  //   this.isVisible = false;
+  //   this.isVisible = true;
+  //   this.isShown = false;
+  //   this.isVisibleForProduct = false;
 
+  //   const obj = {
+  //     store_id: this.selectProductName
+  //   }
+  //   console.log(obj);
 
-    this.isVisible = true;
-    this.isShown = false;
-    this.isVisibleForProduct = false;
+  //   this.http.post('/product_list_user', obj).subscribe((response: any) => {
+  //     console.log(response);
+  //     this.getProductList = response.records
+  //     console.log(response.records);
+  //     console.log(this.getStoreList);
+  //   }, (error: any) => {
+  //     console.log(error);
+  //   });
 
-    const obj = {
-      store_name: this.selectProductName
-    }
-    this.http.post('/product_list_user', obj).subscribe((response: any) => {
-      console.log(response);
-      this.getProductList = response.records
-      console.log(response.records);
-      console.log(this.getStoreList);
-    }, (error: any) => {
-      console.log(error);
-    });
-
-  }
+  // }
 
   backToHome() {
     this.router.navigate(['/homepage'])

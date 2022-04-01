@@ -40,7 +40,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   seconds = 11;
   hour = 1;
 
-  city: any;
+  city: any = "Location";
 
   clearTimer() { clearInterval(this.intervalId); }
   start() { this.countDown(); }
@@ -248,6 +248,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.http.get('/readone_offer_user?o=' + o).subscribe((response: any) => {
       if (response.success == "true") {
         console.log(response);
+        this.contact=response.records.contact_number;
         this.storeTbid = response.records.tbid
         this.storeLogo = response.records.store_logo
         this.storeName = response.records.store_name
@@ -258,13 +259,40 @@ export class Tab1Page implements OnInit, OnDestroy {
         this.totalPrice = response.records.total_cost
         this.offerPrice = response.records.offer_price
         this.other_offer = response.records.other_offer
-        this.offerTime = response.records.offer_time,
-          this.whatsapp_status = response.records.seller_toggle.whatsapp;
-        this.instagram_status = response.records.seller_toggle.instagram;
-        this.website_status = response.records.seller_toggle.website;
-        this.facebook_status = response.records.seller_toggle.facebook;
-        this.youtube_status = response.records.seller_toggle.youtube;
-        this.contact_status = response.records.seller_toggle.contact_number;
+        this.offerTime = response.records.offer_time
+        if (response.records.seller_toggle.whatsapp == "false") {
+          this.whatsapp_status = false
+        } else {
+          this.whatsapp_status = true
+        }
+
+        if (response.records.seller_toggle.instagram == "false") {
+          this.instagram_status = false;
+        } else {
+          this.instagram_status = true
+        }
+
+        if (response.records.seller_toggle.website == "false") {
+          this.website_status = false
+        } else {
+          this.website_status = true
+        }
+        if (response.records.seller_toggle.facebook == "false") {
+          this.facebook_status = false
+        } else {
+          this.facebook_status = true
+        }
+        if (response.records.seller_toggle.youtube == "false") {
+          this.youtube_status = false
+        } else {
+          this.youtube_status = true
+        }
+        if (response.records.seller_toggle.contact_number == "false") {
+          this.contact_status = false
+        } else {
+          this.contact_status = true
+        }
+
 
         this.unit = response.records.product_unit
         if (this.other_offer == "") {
@@ -281,12 +309,12 @@ export class Tab1Page implements OnInit, OnDestroy {
     });
   }
 
-  whatsapp_status: any = true;
-  instagram_status: any = true;
-  website_status: any = true;
-  facebook_status: any = true;
-  youtube_status: any = true;
-  contact_status: any = true;
+  whatsapp_status: any = false;
+  instagram_status: any = false;
+  website_status: any = false;
+  facebook_status: any = false;
+  youtube_status: any = false;
+  contact_status: any = false;
   youtube: any;
   facebook: any;
   //---------------Get Store Details  Api call -------------//
@@ -303,19 +331,20 @@ export class Tab1Page implements OnInit, OnDestroy {
       this.websiteLink = response.records.website
       this.whatsApp = response.records.whatsapp
       this.contact = response.records.contact_number
+ 
+    
+      
       this.instagram = response.records.instagram
       this.youtube = response.records.youtube
       this.facebook = response.records.facebook
       this.storeID = response.records.tbid
       this.storeLogo = response.records.store_logo
       this.deliveryAvilability = response.records.delivery_availability
-
-      this.whatsapp_href = "whatsapp://send?text=HelloWorld";
+      this.whatsapp_href = "https://api.whatsapp.com/send?phone=" + this.whatsApp;
       console.log(this.whatsapp_href);
-
-      this.instagram_href = "instagram://user?username=" + response.records.instagram;
+      this.instagram_href = "https://www.instagram.com/" + response.records.instagram + "/";
       this.youtube_href = response.records.youtube;
-      this.facebook_href = "https://www.facebook.com/" + response.records.facebook + "/"
+      this.facebook_href = "https://www.facebook.com/" + response.records.facebook + "/";
 
 
       if (this.deliveryAvilability == 1 && this.deliveryAvilability == false && this.deliveryAvilability == "Available") {
@@ -330,7 +359,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     );
   }
   youtube_href: any;
-  whatsapp_href: any = "https://api.whatsapp.com/send?phone=7598297335";
+  whatsapp_href: any;
   instagram_href: any;
   facebook_href: any;
   //-------------- Navigate to dashboard ----------//

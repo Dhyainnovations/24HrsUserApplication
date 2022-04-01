@@ -108,7 +108,7 @@
         <div class="col-12 mx-2">
           <div *ngIf="forproduct" class="inputWithIcon">
             <div class="select " id="seller-dropdwon">
-              <select (change)="selectStoreForProductSetAlarm()" [(ngModel)]="storeTbid">
+              <select (change)="selectStoreForProductSetAlarm()" [(ngModel)]="storeTbid" class="m-1">
                 <option  value="" disabled selected>Select </option>
                 <option *ngFor="let store of getStoreList" [value]="store.tbid">{{store.store_name}}</option>
               </select>
@@ -138,11 +138,11 @@
 
     <!-- search suggesion list for product -->
 
-    <div *ngIf="isVisibleForProduct">
-      <ion-list *ngFor="let search of getProductList |filter:selectProductName">
+    <div >
+      <ion-list *ngFor="let search of productNameList | filter:selectProductName">
         <div class="row">
           <div class="col-10">
-            <ion-item (click)="selectProductToSetAlarm( search.product)" class="mx-3">{{search.product}}</ion-item>
+            <ion-item (click)="selectProductToSetAlarm(search.product)" class="mx-3">{{search.product}}</ion-item>
           </div>
           <div class="col-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -156,7 +156,7 @@
       </ion-list>
     </div>
 
-    <h5 class="mx-2" style="color: #5C5C5C;">results:</h5>
+    <h5 class="mx-2" style="color: #5C5C5C;">Results:</h5>
 
     <!-- set alarm product result -->
 
@@ -166,12 +166,13 @@
           <div class="row mt-2">
             <div class="col-4">
               <img src="{{storeLogo}}" style="margin:1px;" height="19px" width="19px" alt="">
+              
             </div>
             <div class="col-8 ion-text-left">
               <span style="font-size: 10px;color:#404040;margin-left: -17px;"><b>{{storeName}} </b></span>
 
             </div>
-            <div (click)="singleCard()" class="col-9 ion-text-left mt-2">
+            <div  class="col-9 ion-text-left mt-2">
               <img id="product_img" src="{{productImage}}" alt="">
             </div>
 
@@ -186,22 +187,20 @@
             </div>
 
             <div class="col-12 ion-text-left mt-1">
-              <p style="padding: 0; margin:0;color: #121212;font-size: 12px;"><b>{{productName}}</b></p>
+              <p style="padding: 0; margin:0;color: #121212;font-size: 16px;"><b>{{productName}}</b></p>
             </div>
             <div class="col-12 ion-text-left ">
 
-              <p><span style="font-size:10px;color: #404040;text-decoration: line-through">
-                  <i style="color:#23d5ab" class="fa fa-inr" aria-hidden="true"></i>
-                  Rs.{{totalCost}}.00</span> <span style="margin: 3px;padding:0;font-size:13px;">
-                  <b>{{offerPrice}}.00</b></span></p>
+              <p><span style="padding:0;font-size:12px;">
+                  <b><span style="color:#EB154B">₹</span> {{totalCost}}</b></span></p>
             </div>
-            <div class="col-12 ion-text-left">
+            <div class="col-12 ion-text-left pb-2">
               <p style="padding: 0; margin:0;color: #272A3F;font-size: 12px;">
-                <i style="color:#23d5ab" class="fa fa-heart" aria-hidden="true"></i>
+                 <i style="color:#EB154B" class="fa fa-heart" aria-hidden="true"></i>
                 {{description}}
               </p>
             </div>
-            <div class="col-8 ion-text-left ">
+            <!-- <div class="col-8 ion-text-left ">
               <p style="padding: 0; margin:0;color: #272A3F;font-size: 12px;">
                 <i style="color:#23d5ab" class="fa fa-clock-o" aria-hidden="true"></i>
                 {{offerTime}}
@@ -215,7 +214,7 @@
                     d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
                 </svg>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -225,10 +224,10 @@
     <!-- set alarm store result -->
 
     <div *ngIf="resultStoreCardVisible" class="col-12 ion-text-center">
-      <div style="height: 75px;" class="card">
+      <div style="height: 75px;" class="card" >
         <div class="row">
           <div class="col-4 mt-1 mb-3">
-            <img src="{{storeLogForStore}}" style="margin: 5px;" height="65px" width="75px" alt="">
+            <img src="{{storeLogForStore}}" style="margin: 5px;" height="55px" width="55px" alt="">
           </div>
           <div class="col-8 mt-4 mb-2">
             <span style="font-size: 18px;color:#404040"><b>{{storeNameForSrore}}</b></span>

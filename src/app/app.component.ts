@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 // import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 import { ActivatedRoute } from '@angular/router';
-
+import { App } from '@capacitor/app';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -23,16 +24,25 @@ export class AppComponent {
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
  
-  constructor( private router: Router,private route: ActivatedRoute,) {
+  constructor( private router: Router,private route: ActivatedRoute,private _location: Location) {
     route.params.subscribe(val => {
-      
+      App.addListener('backButton', () =>
+      {
+        if (this._location.isCurrentPathEqualTo('/tabs/tab1'))
+        {
+          navigator['app'].exitApp();
+        } 
+        else
+        {
+          this._location.back();
+        }
+      });
    
     
     });
    }
 
-  logout() {
-    
+  logout() {    
     localStorage.clear()
     this.router.navigate(['/welcome'])
   }
