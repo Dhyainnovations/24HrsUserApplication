@@ -5,8 +5,8 @@ import { HttpService } from '../shared/http.service';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
 import { trigger, style, state, animate, transition } from '@angular/animations';
-
-
+import { ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 
 
 @Component({
@@ -15,19 +15,27 @@ import { trigger, style, state, animate, transition } from '@angular/animations'
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit, OnDestroy {
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpService, route: ActivatedRoute, public popoverController: PopoverController) {
+  @ViewChild(IonContent) content: IonContent;
+
+  scrollToTop() {
+    this.content.scrollToTop(400);
+  }
+  ionViewDidEnter() {
+    this.scrollToTop();
+  }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpService, route: ActivatedRoute, public popoverController: PopoverController, private popover: PopoverController) {
     route.params.subscribe(val => {
       this.getSelectCategory()
       this.locationList()
       this.expiryOfferList()
       this.UserDetails()
-
+      this.GetOtherofferList();
+      this.offerList()
     });
   }
 
   ngOnInit() {
-    this.GetOtherofferList();
-    this.offerList()
+ 
     this.start()
     console.log(this.userdetails);
     console.log(this.whatsapp_href);
@@ -40,7 +48,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   seconds = 11;
   hour = 1;
 
-  city: any = "Location";
+  city: any = localStorage.getItem("location");;
 
   clearTimer() { clearInterval(this.intervalId); }
   start() { this.countDown(); }
@@ -237,18 +245,19 @@ export class Tab1Page implements OnInit, OnDestroy {
     });
   }
 
-
+  PopupModel: any;
   //------------- Read one Offer(card) Api call ------------//
   singleCard(product) {
     this.deliveryAvilability = ''
     const o = product
     this.isvisible = true;
+    this.PopupModel = true;
     this.storedetailsVisible = false
     this.productDetails = true
     this.http.get('/readone_offer_user?o=' + o).subscribe((response: any) => {
       if (response.success == "true") {
         console.log(response);
-        this.contact=response.records.contact_number;
+        this.contact = response.records.contact_number;
         this.storeTbid = response.records.tbid
         this.storeLogo = response.records.store_logo
         this.storeName = response.records.store_name
@@ -271,7 +280,11 @@ export class Tab1Page implements OnInit, OnDestroy {
         } else {
           this.instagram_status = true
         }
-
+        if (response.records.delivery_availability == "Available") {
+          this.ProductDelivery = true
+        } else if (response.records.delivery_availability == "") {
+          this.ProductDelivery = false
+        }
         if (response.records.seller_toggle.website == "false") {
           this.website_status = false
         } else {
@@ -303,7 +316,7 @@ export class Tab1Page implements OnInit, OnDestroy {
           this.IfOtherOfferPresent = true;
         }
       }
-
+      this.scrollToTop();
     }, (error: any) => {
       console.log(error);
     });
@@ -317,8 +330,10 @@ export class Tab1Page implements OnInit, OnDestroy {
   contact_status: any = false;
   youtube: any;
   facebook: any;
+  ProductDelivery: any;
   //---------------Get Store Details  Api call -------------//
   storeDetails(storename) {
+    this.ProductDelivery = false
     this.storedetailsVisible = true;
     this.productDetails = false;
     const obj = {
@@ -331,9 +346,9 @@ export class Tab1Page implements OnInit, OnDestroy {
       this.websiteLink = response.records.website
       this.whatsApp = response.records.whatsapp
       this.contact = response.records.contact_number
- 
-    
-      
+
+
+
       this.instagram = response.records.instagram
       this.youtube = response.records.youtube
       this.facebook = response.records.facebook
@@ -347,10 +362,11 @@ export class Tab1Page implements OnInit, OnDestroy {
       this.facebook_href = "https://www.facebook.com/" + response.records.facebook + "/";
 
 
-      if (this.deliveryAvilability == 1 && this.deliveryAvilability == false && this.deliveryAvilability == "Available") {
-        this.deliveryAvilability = false
-      } else {
+
+      if (response.records.delivery_availability == "Available") {
         this.deliveryAvilability = true
+      } else if (response.records.delivery_availability == "") {
+        this.deliveryAvilability = false
       }
     }
       , (error: any) => {
@@ -367,6 +383,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.storedetailsVisible = false;
     this.isvisible = false;
     this.productDetails = true;
+    this.PopupModel = false;
 
   }
 
@@ -478,9 +495,6 @@ export class Tab1Page implements OnInit, OnDestroy {
     );
   }
 
-
-
-
   expiryofferlist: any = []
   //------------- get offer list -----------//
   expiryOfferList() {
@@ -532,9 +546,49 @@ export class Tab1Page implements OnInit, OnDestroy {
       city: this.city
 
     }
+
     this.http.post('/list_offer_category', obj).subscribe((response: any) => {
       if (response.success == "true") {
-        this.offerlist = response.records;
+    
+        this.offerlist = [];
+        for (var i = 0; i < response.records.length; i++) {
+          if (response.records[i].offer != "") {
+            const data = {
+              store_name: response.records[i].store_name,
+              product_image: response.records[i].product_image,
+              offer_time: response.records[i].offer_time,
+              total_cost: response.records[i].total_cost,
+              product: response.records[i].product,
+              product_unit: response.records[i].product_unit,
+              offer: response.records[i].offer,
+              offer_price: response.records[i].offer_price,
+              tbid: response.records[i].tbid,
+              product_weight: response.records[i].product_weight
+            }
+            console.log(this.offerlist);
+            this.offerlist.push(data);
+          }
+        }
+
+        this.otherofferlist = [];
+        for (var i = 0; i < response.records.length; i++) {
+          if (response.records[i].other_offer != "") {
+            const data = {
+              product_image: response.records[i].product_image,
+              store_name: response.records[i].store_name,
+              offer_time: response.records[i].offer_time,
+              total_cost: response.records[i].total_cost,
+              product: response.records[i].product,
+              product_unit: response.records[i].product_unit,
+              other_offer: response.records[i].other_offer,
+              product_weight: response.records[i].product_weight,
+              tbid: response.records[i].tbid
+            }
+            console.log(this.otherofferlist);
+            this.otherofferlist.push(data);
+          }
+        }
+
         console.log(response);
         this.offerListVisible = true;
         this.noDataFound = false;
@@ -560,18 +614,96 @@ export class Tab1Page implements OnInit, OnDestroy {
           this.locationsList.push(response.records[i])
         }
       }
-
       console.log(response.records.city);
-
     }, (error: any) => {
       console.log(error);
     });
 
   }
 
+
+  locationBased() {
+    this.offerlist = [];
+    var city = {
+      city: this.city
+    }
+    this.http.post('/list_offer_city', city).subscribe((response: any) => {
+      console.log(response.records);
+      this.offerlist = [];
+      for (var i = 0; i < response.records.length; i++) {
+        if (response.records[i].offer != "") {
+          const data = {
+            store_name: response.records[i].store_name,
+            product_image: response.records[i].product_image,
+            offer_time: response.records[i].offer_time,
+            total_cost: response.records[i].total_cost,
+            product: response.records[i].product,
+            product_unit: response.records[i].product_unit,
+            offer: response.records[i].offer,
+            offer_price: response.records[i].offer_price,
+            tbid: response.records[i].tbid,
+            product_weight: response.records[i].product_weight
+          }
+          console.log(this.offerlist);
+          this.offerlist.push(data);
+        }
+      }
+      console.log(this.offerlist);
+      if (response.message == "No offers found.") {
+        this.noDataFound = true;
+      } else {
+        this.noDataFound = false;
+      }
+    }, (error: any) => {
+      console.log(error);
+      this.noDataFound = true;
+    }
+    );
+  }
+
+
+
+  locationBasedOtherOffer() {
+    this.otherofferlist = [];
+    const data = {
+      city: this.city
+    }
+    this.http.post('/list_offer_city', data).subscribe((response: any) => {
+      console.log(response.records);
+      this.otherofferlist = [];
+      for (var i = 0; i < response.records.length; i++) {
+        if (response.records[i].other_offer != "") {
+          const data = {
+            product_image: response.records[i].product_image,
+            store_name: response.records[i].store_name,
+            offer_time: response.records[i].offer_time,
+            total_cost: response.records[i].total_cost,
+            product: response.records[i].product,
+            product_unit: response.records[i].product_unit,
+            other_offer: response.records[i].other_offer,
+            product_weight: response.records[i].product_weight,
+            tbid: response.records[i].tbid
+          }
+          console.log(this.otherofferlist);
+          this.otherofferlist.push(data);
+        }
+      }
+      console.log(this.offerlist);
+      if (response.message == "No offers found.") {
+        this.noDataFound = true;
+      } else {
+        this.noDataFound = false;
+      }
+
+    }, (error: any) => {
+      console.log(error);
+      this.noDataFound = true;
+    }
+    );
+  }
+
   changeLocation() {
     console.log(this.city);
-
     if (this.city == "All") {
       this.http.get('/list_all_offer',).subscribe((response: any) => {
         this.offerlist = response.records;
@@ -597,5 +729,8 @@ export class Tab1Page implements OnInit, OnDestroy {
   testSlide() {
     this.router.navigate(['/slide-test'])
   }
+
+
+
 
 }

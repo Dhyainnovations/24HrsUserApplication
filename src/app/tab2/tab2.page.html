@@ -79,7 +79,7 @@
             <!-- search suggesion list for store -->
 
             <div *ngIf="isVisible">
-              <ion-list *ngFor="let store of getStoreList |filter:selectStore">
+              <ion-list *ngFor="let store of getStoreList | filter:selectStore">
                 <div class="row">
                   <div class="col-10">
                     <ion-item (click)="selectStoreForGetStoreDetails(store.tbid,store.store_name)" class="mx-3">

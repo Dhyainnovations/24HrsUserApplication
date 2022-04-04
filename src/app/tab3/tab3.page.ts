@@ -133,6 +133,7 @@ export class Tab3Page {
       if (response.success == "true") {
         this.updateUsername = response.user_name
         this.PopupModel = false;
+        localStorage.setItem("location", this.city);
 
       } else {
 

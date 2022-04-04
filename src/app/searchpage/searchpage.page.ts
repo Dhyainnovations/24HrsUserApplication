@@ -37,8 +37,12 @@ export class SearchpagePage implements OnInit {
   totalCost: any;
   offerPrice: any;
   offerTime: any;
-
-
+  whatsapp_status: any;
+  instagram_status: any;
+  website_status: any;
+  facebook_status: any;
+  youtube_status: any;
+  contact_status: any;
   //-------------- Navigate to notificationPage ----------//
   notification() {
     this.router.navigate(['/notification'])
@@ -76,7 +80,7 @@ export class SearchpagePage implements OnInit {
   IfOtherOfferPresent: any;
   other_offer: any;
   offer: any;
-  totalPrice:any;
+  totalPrice: any;
   searchRecord: any = []
   selectSearchProduct(name) {
 
@@ -91,6 +95,7 @@ export class SearchpagePage implements OnInit {
       this.offerPrice = response.records[0].offer_price
       this.other_offer = response.records[0].other_offer
       this.offer = response.records[0].product_weight
+
       if (this.other_offer == "") {
         this.IfOfferPresent = true;
         this.IfOtherOfferPresent = false;
@@ -98,8 +103,40 @@ export class SearchpagePage implements OnInit {
         this.IfOfferPresent = false;
         this.IfOtherOfferPresent = true;
       }
+      if (response.records[0].seller_toggle.whatsapp == "false") {
+        this.whatsapp_status = false
+      } else {
+        this.whatsapp_status = true
+      }
+
+      if (response.records[0].seller_toggle.instagram == "false") {
+        this.instagram_status = false;
+      } else {
+        this.instagram_status = true
+      }
+
+      if (response.records[0].seller_toggle.website == "false") {
+        this.website_status = false
+      } else {
+        this.website_status = true
+      }
+      if (response.records[0].seller_toggle.facebook == "false") {
+        this.facebook_status = false
+      } else {
+        this.facebook_status = true
+      }
+      if (response.records[0].seller_toggle.youtube == "false") {
+        this.youtube_status = false
+      } else {
+        this.youtube_status = true
+      }
+      if (response.records[0].seller_toggle.contact_number == "false") {
+        this.contact_status = false
+      } else {
+        this.contact_status = true
+      }
       console.log(this.other_offer);
-      
+
       this.searchRecord = response.records
 
     }, (error: any) => {

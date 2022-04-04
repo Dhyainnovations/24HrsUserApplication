@@ -83,7 +83,7 @@ export class ChangeCategoryPage implements OnInit {
   }
 
   selectedCategories() {
-    this.http.get('/store_category',).subscribe((response: any) => {
+    this.http.get('/store_category_user',).subscribe((response: any) => {
       console.log(response);
 
       this.alredySelectedCategoryList = response.records

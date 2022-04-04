@@ -52,7 +52,7 @@ export class Tab2Page {
   }
 
   forProductbtnVisible: any = false
-  forStorebtnVisible: any = false
+  forStorebtnVisible: any = true
   isVisible: any = false;
   isVisibleForProduct: any = false;
   isShown: any = true;
@@ -62,17 +62,15 @@ export class Tab2Page {
   storeTbid: any = '';
   storeIdUseOfProductSetAlarm: any;
   productTbid: any;
-
   resultProductCardVisible: any = false
   resultStoreCardVisible: any = false
   forproduct: any = false;
-  forstore: any = false;
+  forstore: any = true;
   getStoreList: any = [];
   storeDetails: any = []
   resultProductDetails: any = []
   productNameList: any = []
   getProductList: any = []
-
   storeLogo: any;
   description: any;
   storeName: any;
@@ -137,7 +135,7 @@ export class Tab2Page {
     const obj = {
       store_id: this.storeTbid,
       store_category_id: this.store_category_tbid,
-      category_id:  this.category_tbid,
+      category_id: this.category_tbid,
       product_id: this.productTbid
     }
     console.log(obj);
@@ -198,8 +196,8 @@ export class Tab2Page {
     this.http.get('/product_search_user?s=' + s).subscribe((response: any) => {
       console.log(response.records[0]);
 
-      this.category_tbid =response.records[0].category_id;
-      this.store_category_tbid =response.records[0].store_category_id;
+      this.category_tbid = response.records[0].category_id;
+      this.store_category_tbid = response.records[0].store_category_id;
       this.selectProductName = name;
       this.storeLogo = response.records[0].store_logo
       this.storeName = response.records[0].store_name
@@ -214,8 +212,6 @@ export class Tab2Page {
       this.productTbid = response.records[0].tbid
       this.isVisibleForProduct = false
       this.resultProductCardVisible = true;
-
-
     }, (error: any) => {
       console.log(error);
     });
@@ -225,6 +221,7 @@ export class Tab2Page {
   }
 
   storeList() {
+    this.productNameList = []
     console.log(this.getStoreList);
     this.http.get('/list_stores',).subscribe((response: any) => {
       console.log(response);
