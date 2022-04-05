@@ -125,7 +125,7 @@ export class Tab3Page {
       location: this.city
 
     }
-
+  
     console.log(updateData);
 
     this.http.post('/user_update_profile', updateData).subscribe((response: any) => {
@@ -293,6 +293,11 @@ export class Tab3Page {
     }, (error: any) => {
       console.log(error);
     });
+  }
+
+  
+  notification() {
+    this.router.navigate(['/notification'])
   }
 
 

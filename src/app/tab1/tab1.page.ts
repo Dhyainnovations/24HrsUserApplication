@@ -48,7 +48,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   seconds = 11;
   hour = 1;
 
-  city: any = localStorage.getItem("location");;
+  city: any = "All";
 
   clearTimer() { clearInterval(this.intervalId); }
   start() { this.countDown(); }
@@ -269,6 +269,13 @@ export class Tab1Page implements OnInit, OnDestroy {
         this.offerPrice = response.records.offer_price
         this.other_offer = response.records.other_offer
         this.offerTime = response.records.offer_time
+        this.whatsapp_href= "https://wa.me/"+response.records.whatsapp      
+        this.instagram_href = "https://www.instagram.com/" + response.records.instagram + "/";
+        this.youtube_href = response.records.youtube;
+        this.facebook_href = "https://www.facebook.com/" + response.records.facebook + "/";
+        this.contact = response.records.contact_number
+        this.websiteLink = response.records.website
+
         if (response.records.seller_toggle.whatsapp == "false") {
           this.whatsapp_status = false
         } else {
@@ -340,29 +347,24 @@ export class Tab1Page implements OnInit, OnDestroy {
       store_name: storename
     }
     this.http.post('/store_details_user', obj).subscribe((response: any) => {
+      
       this.storedetails = response.records;
       console.log(this.storedetails);
       this.storeAddress = response.records.address_line_1 + " " + response.records.address_line_2 + " " + response.records.city + " : " + response.records.pincode + " " + response.records.state;
       this.websiteLink = response.records.website
       this.whatsApp = response.records.whatsapp
       this.contact = response.records.contact_number
-
-
-
+  
       this.instagram = response.records.instagram
       this.youtube = response.records.youtube
       this.facebook = response.records.facebook
       this.storeID = response.records.tbid
       this.storeLogo = response.records.store_logo
       this.deliveryAvilability = response.records.delivery_availability
-      this.whatsapp_href = "https://api.whatsapp.com/send?phone=" + this.whatsApp;
-      console.log(this.whatsapp_href);
+      this.whatsapp_href= "https://wa.me/"+response.records.whatsapp         
       this.instagram_href = "https://www.instagram.com/" + response.records.instagram + "/";
       this.youtube_href = response.records.youtube;
       this.facebook_href = "https://www.facebook.com/" + response.records.facebook + "/";
-
-
-
       if (response.records.delivery_availability == "Available") {
         this.deliveryAvilability = true
       } else if (response.records.delivery_availability == "") {
@@ -375,7 +377,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     );
   }
   youtube_href: any;
-  whatsapp_href: any;
+  whatsapp_href: any ;
   instagram_href: any;
   facebook_href: any;
   //-------------- Navigate to dashboard ----------//
