@@ -204,7 +204,8 @@ export class Tab3Page {
         {
           text: 'Delete Account!',
           handler: (data: any) => {
-            this.password = data
+            alert(data.Place)
+            this.password = data.Place
             const obj = {
               tbid: this.userdetails.id,
               password: this.password
@@ -231,6 +232,8 @@ export class Tab3Page {
                   icon: 'success',
                   title: 'Account Deleted Successfully.'
                 })
+                localStorage.clear()
+                this.router.navigate(['/welcome'])
               }
 
 

@@ -83,7 +83,7 @@ export class NotificationPage implements OnInit {
         }
       }
       console.log(this.notificationList);
-      this.ScheduleNotification()
+      // this.ScheduleNotification()
     }, (error: any) => {
       console.log(error);
       this.isShown = true
@@ -91,19 +91,19 @@ export class NotificationPage implements OnInit {
   }
 
 
-  ScheduleNotification() {
-    var options: LocalNotificationSchema = {
-      id: 123,
-      title: "Sparrow",
-      body: "Test",
-      summaryText: "Test Msg",
-      largeBody: "largeBody",
-      schedule: { at: new Date(new Date().getTime() + parseInt(this.notificationsDelayInSeconds) * 1000) },
-      extra: "extra"
-    }
-    LocalNotifications.schedule({ notifications: [options] }).then(() => {
+  // ScheduleNotification() {
+  //   var options: LocalNotificationSchema = {
+  //     id: 123,
+  //     title: "Sparrow",
+  //     body: "Test",
+  //     summaryText: "Test Msg",
+  //     largeBody: "largeBody",
+  //     schedule: { at: new Date(new Date().getTime() + parseInt(this.notificationsDelayInSeconds) * 1000) },
+  //     extra: "extra"
+  //   }
+  //   LocalNotifications.schedule({ notifications: [options] }).then(() => {
 
-    })
-  }
+  //   })
+  // }
 
 }
