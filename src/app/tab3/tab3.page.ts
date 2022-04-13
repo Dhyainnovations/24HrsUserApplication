@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { ToastController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 import {
   trigger,
   state,
@@ -125,7 +126,7 @@ export class Tab3Page {
       location: this.city
 
     }
-  
+
     console.log(updateData);
 
     this.http.post('/user_update_profile', updateData).subscribe((response: any) => {
@@ -298,7 +299,7 @@ export class Tab3Page {
     });
   }
 
-  
+
   notification() {
     this.router.navigate(['/notification'])
   }

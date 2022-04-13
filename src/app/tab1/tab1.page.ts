@@ -256,7 +256,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.productDetails = true
     this.http.get('/readone_offer_user?o=' + o).subscribe((response: any) => {
       if (response.success == "true") {
-        console.log(response);
+
         this.contact = response.records.contact_number;
         this.storeTbid = response.records.tbid
         this.storeLogo = response.records.store_logo
@@ -268,7 +268,7 @@ export class Tab1Page implements OnInit, OnDestroy {
         this.totalPrice = response.records.total_cost
         this.offerPrice = response.records.offer_price
         this.other_offer = response.records.other_offer
-        this.offerTime = response.records.offer_time
+        this.offerTime = response.records.offer_end_time
         this.whatsapp_href= "https://wa.me/"+response.records.whatsapp      
         this.instagram_href = "https://www.instagram.com/" + response.records.instagram + "/";
         this.youtube_href = response.records.youtube;
@@ -430,7 +430,7 @@ export class Tab1Page implements OnInit, OnDestroy {
           const data = {
             product_image: response.records[i].product_image,
             store_name: response.records[i].store_name,
-            offer_time: response.records[i].offer_time,
+            offer_time: response.records[i].offer_end_time,
             total_cost: response.records[i].total_cost,
             product: response.records[i].product,
             product_unit: response.records[i].product_unit,
@@ -470,7 +470,7 @@ export class Tab1Page implements OnInit, OnDestroy {
           const data = {
             store_name: response.records[i].store_name,
             product_image: response.records[i].product_image,
-            offer_time: response.records[i].offer_time,
+            offer_time: response.records[i].offer_end_time,
             total_cost: response.records[i].total_cost,
             product: response.records[i].product,
             product_unit: response.records[i].product_unit,
@@ -558,7 +558,7 @@ export class Tab1Page implements OnInit, OnDestroy {
             const data = {
               store_name: response.records[i].store_name,
               product_image: response.records[i].product_image,
-              offer_time: response.records[i].offer_time,
+              offer_time: response.records[i].offer_end_time,
               total_cost: response.records[i].total_cost,
               product: response.records[i].product,
               product_unit: response.records[i].product_unit,
@@ -578,7 +578,7 @@ export class Tab1Page implements OnInit, OnDestroy {
             const data = {
               product_image: response.records[i].product_image,
               store_name: response.records[i].store_name,
-              offer_time: response.records[i].offer_time,
+              offer_time: response.records[i].offer_end_time,
               total_cost: response.records[i].total_cost,
               product: response.records[i].product,
               product_unit: response.records[i].product_unit,
@@ -637,7 +637,7 @@ export class Tab1Page implements OnInit, OnDestroy {
           const data = {
             store_name: response.records[i].store_name,
             product_image: response.records[i].product_image,
-            offer_time: response.records[i].offer_time,
+            offer_time: response.records[i].offer_end_time,
             total_cost: response.records[i].total_cost,
             product: response.records[i].product,
             product_unit: response.records[i].product_unit,
@@ -678,7 +678,7 @@ export class Tab1Page implements OnInit, OnDestroy {
           const data = {
             product_image: response.records[i].product_image,
             store_name: response.records[i].store_name,
-            offer_time: response.records[i].offer_time,
+            offer_time: response.records[i].offer_end_time,
             total_cost: response.records[i].total_cost,
             product: response.records[i].product,
             product_unit: response.records[i].product_unit,
