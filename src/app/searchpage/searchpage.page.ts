@@ -82,8 +82,14 @@ export class SearchpagePage implements OnInit {
   offer: any;
   totalPrice: any;
   searchRecord: any = []
+  product_image: any;
+  product: any
+  product_weight: any;
+  product_unit: any;
+  store_name: any;
+  offer_price: any;
+  offer_end_time: any;
   selectSearchProduct(name) {
-
     this.searchProductName = name;
     const s = name;
     console.log(s);
@@ -95,7 +101,13 @@ export class SearchpagePage implements OnInit {
       this.offerPrice = response.records[0].offer_price
       this.other_offer = response.records[0].other_offer
       this.offer = response.records[0].product_weight
-
+      this.product_image = response.records[0].product_image
+      this.product = response.records[0].product
+      this.product_weight = response.records[0].product_weight
+      this.product_unit = response.records[0].product_unit
+      this.store_name = response.records[0].store_name
+      this.offer_price = response.records[0].offer_price
+      this.offer_end_time = response.records[0].offer_end_time
       if (this.other_offer == "") {
         this.IfOfferPresent = true;
         this.IfOtherOfferPresent = false;

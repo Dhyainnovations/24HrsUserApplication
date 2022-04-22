@@ -151,11 +151,9 @@ export class Tab3Page {
 
 
   //-------------- Delete account func ----------//
-  deleteAccount() {
-    this.presentAlertConfirm()
-  }
 
-  async presentAlertConfirm() {
+
+  async deleteAccount() {
     const alert = await this.alertController.create({
       cssClass: 'buttonCss ',
       header: 'Delete Your Account!',
@@ -173,7 +171,7 @@ export class Tab3Page {
           cssClass: 'buttonCss',
           handler: () => {
             console.log('Confirm Okay');
-            this.showPrompt()
+            this.showPrompt();
           }
         }
       ]
@@ -183,90 +181,57 @@ export class Tab3Page {
   }
 
   showPrompt() {
-    this.alertController.create({
-      cssClass: 'buttonCss ',
-      header: 'Enter The Password To Delete Your Account',
-      inputs: [
-        {
-          name: 'Place',
-          placeholder: 'Password',
-          type: 'text'
+    const obj = {
+      tbid: this.userdetails.id,
+    }
+    console.log(obj);
 
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: (data: any) => {
-
-            console.log('Canceled', data);
+    this.http.post('/user_delete_account', obj).subscribe((response: any) => {
+      console.log(response);
+      if (response.success == "true") {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
           }
-        },
-        {
-          text: 'Delete Account!',
-          handler: (data: any) => {
-            alert(data.Place)
-            this.password = data.Place
-            const obj = {
-              tbid: this.userdetails.id,
-              password: this.password
-            }
-            console.log(obj);
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Account Deleted Successfully.'
+        })
+        localStorage.clear()
+        this.router.navigate(['/welcome'])
+      }
 
 
-            this.http.post('/user_delete_account', obj).subscribe((response: any) => {
-              console.log(response);
-              if (response.success == "true") {
-                const Toast = Swal.mixin({
-                  toast: true,
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 1000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-
-                Toast.fire({
-                  icon: 'success',
-                  title: 'Account Deleted Successfully.'
-                })
-                localStorage.clear()
-                this.router.navigate(['/welcome'])
-              }
-
-
-
-
-            }, (error: any) => {
-              const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-              })
-
-              Toast.fire({
-                icon: 'error',
-                title: 'Something Went Wrong'
-              })
-              console.log(error);
-
-            })
-            console.log('Saved Information', data);
-          }
+    }, (error: any) => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-      ]
-    }).then(res => {
-      res.present();
-    });
+      })
+
+      Toast.fire({
+        icon: 'error',
+        title: 'Something Went Wrong'
+      })
+      console.log(error);
+
+    })
+
+
   }
 
 

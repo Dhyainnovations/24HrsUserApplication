@@ -138,7 +138,7 @@
 
     <!-- search suggesion list for product -->
 
-    <div >
+    <div *ngIf="IfproductNamePresent">
       <ion-list *ngFor="let search of productNameList | filter:selectProductName">
         <div class="row">
           <div class="col-10">

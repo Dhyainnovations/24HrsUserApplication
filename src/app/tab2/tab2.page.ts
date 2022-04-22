@@ -43,12 +43,19 @@ export class Tab2Page {
   form: FormGroup;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpService, route: ActivatedRoute,) {
     route.params.subscribe(val => {
-      this.storeList()
+      this.resultProductCardVisible = false;
+      this.productNameList = [];
+      this.storeTbid = ""
+      this.getStoreList = [];
+      this.selectProductName = ""
+      this.storeList();
+      this.resultStoreCardVisible = false;
+      this.selectStore = ""
+
     });
   }
 
   ngOnInit() {
-
   }
 
   forProductbtnVisible: any = false
@@ -100,6 +107,9 @@ export class Tab2Page {
     this.forProductbtnVisible = true
     this.forStorebtnVisible = false
     this.resultStoreCardVisible = false
+    this.selectStore = ""
+    this.isVisible = false;
+
   }
 
   forStore() {
@@ -107,7 +117,11 @@ export class Tab2Page {
     this.forproduct = false;
     this.forStorebtnVisible = true
     this.forProductbtnVisible = false
-    this.resultProductCardVisible = false
+
+    this.resultProductCardVisible = false;
+    this.productNameList = [];
+    this.isVisible = false;
+    this.selectProductName = ""
   }
 
 
@@ -115,6 +129,8 @@ export class Tab2Page {
 
 
   selectStoreForProductSetAlarm() {
+    this.selectProductName = "";
+    this.resultProductCardVisible = false;
     this.productNameList = []
     this.isVisible = true;
     this.storeIdUseOfProductSetAlarm = name
@@ -161,10 +177,12 @@ export class Tab2Page {
           icon: 'success',
           title: 'Alarm Set successfully'
         })
-      } else {
-
+        this.resultProductCardVisible = false;
+        this.productNameList = [];
+        this.getStoreList = []
+        alert("Clear")
       }
-
+      this.router.navigate(['/myalarms'])
     }, (error: any) => {
       this.selectProductName = ''
       const Toast = Swal.mixin({
@@ -185,6 +203,8 @@ export class Tab2Page {
       })
       console.log(error);
     });
+    this.resultProductCardVisible = false;
+    this.productNameList = [];
   }
 
   category_tbid: any;
@@ -219,8 +239,9 @@ export class Tab2Page {
 
 
   }
-
+  IfproductNamePresent: any;
   storeList() {
+    this.storeTbid = ""
     this.productNameList = []
     console.log(this.getStoreList);
     this.http.get('/list_stores',).subscribe((response: any) => {
@@ -232,6 +253,8 @@ export class Tab2Page {
       console.log(error);
     });
   }
+
+
 
   searchStore() {
     this.isVisible = true;
@@ -252,14 +275,10 @@ export class Tab2Page {
       console.log(response);
       if (response.success == "true") {
         this.resultStoreCardVisible = true;
-
         this.storeLogForStore = response.records.store_logo
         this.storeNameForSrore = response.records.store_name
         this.storetbidstore = response.records.tbid
-
       }
-
-
     }, (error: any) => {
       console.log(error);
     });
@@ -271,7 +290,6 @@ export class Tab2Page {
       store_id: this.storetbidstore
     }
     console.log(obj);
-
     this.http.post('/store_alarm', obj).subscribe((response: any) => {
       console.log(response);
       if (response.success == "true") {
@@ -293,7 +311,7 @@ export class Tab2Page {
           icon: 'success',
           title: 'Alarm Set successfully'
         })
-
+        this.router.navigate(['/myalarms'])
       }
 
     }, (error: any) => {
@@ -316,37 +334,32 @@ export class Tab2Page {
         title: 'Alarm Already Exist for this store.'
       })
     });
+    this.resultStoreCardVisible = false;
+    this.productNameList = [];
+    this.selectStore = "";
   }
 
 
 
-  searchProduct() {
 
+
+  productSearchBasedOnStore() {
+    this.IfproductNamePresent = true;
+    const obj = {
+      store_id: this.selectProductName
+    }
+    console.log(obj);
+
+    this.http.post('/product_list_user', obj).subscribe((response: any) => {
+      console.log(response);
+      this.getProductList = response.records
+      console.log(response.records);
+      console.log(this.getStoreList);
+    }, (error: any) => {
+      console.log(error);
+    });
 
   }
-
-  // productSearchBasedOnStore() {
-  //   this.isVisibleForProduct = true;
-  //   this.isVisible = false;
-  //   this.isVisible = true;
-  //   this.isShown = false;
-  //   this.isVisibleForProduct = false;
-
-  //   const obj = {
-  //     store_id: this.selectProductName
-  //   }
-  //   console.log(obj);
-
-  //   this.http.post('/product_list_user', obj).subscribe((response: any) => {
-  //     console.log(response);
-  //     this.getProductList = response.records
-  //     console.log(response.records);
-  //     console.log(this.getStoreList);
-  //   }, (error: any) => {
-  //     console.log(error);
-  //   });
-
-  // }
 
   backToHome() {
     this.router.navigate(['/homepage'])

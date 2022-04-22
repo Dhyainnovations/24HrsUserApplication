@@ -27,19 +27,13 @@ export class Tab1Page implements OnInit, OnDestroy {
     route.params.subscribe(val => {
       this.getSelectCategory()
       this.locationList()
-      this.expiryOfferList()
       this.UserDetails()
-      this.GetOtherofferList();
       this.offerList()
     });
   }
 
   ngOnInit() {
- 
     this.start()
-    console.log(this.userdetails);
-    console.log(this.whatsapp_href);
-
   }
   ngOnDestroy() { this.clearTimer(); }
 
@@ -124,7 +118,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   UserDetails() {
 
     this.http.get('/user_details',).subscribe((response: any) => {
-      console.log(response);
+
       this.loginUserTbid = response.records.user_name;
       if (response.records.user_name == null) {
         this.loginUserName = "User";
@@ -163,7 +157,6 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   // ----------- spam report -----------//
   spam(val) {
-    console.log(this.spamMsg);
     if (this.spamMsg == true) {
       this.spam_msg = "spam Msg"
     } else {
@@ -202,7 +195,6 @@ export class Tab1Page implements OnInit, OnDestroy {
     }
 
     this.http.post('/seller_report', obj).subscribe((response: any) => {
-      console.log(response);
       if (response.success == "true") {
         this.others = ''
         const Toast = Swal.mixin({
@@ -255,8 +247,9 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.storedetailsVisible = false
     this.productDetails = true
     this.http.get('/readone_offer_user?o=' + o).subscribe((response: any) => {
+  
+      
       if (response.success == "true") {
-
         this.contact = response.records.contact_number;
         this.storeTbid = response.records.tbid
         this.storeLogo = response.records.store_logo
@@ -269,7 +262,7 @@ export class Tab1Page implements OnInit, OnDestroy {
         this.offerPrice = response.records.offer_price
         this.other_offer = response.records.other_offer
         this.offerTime = response.records.offer_end_time
-        this.whatsapp_href= "https://wa.me/"+response.records.whatsapp      
+        this.whatsapp_href = "https://wa.me/" + response.records.whatsapp
         this.instagram_href = "https://www.instagram.com/" + response.records.instagram + "/";
         this.youtube_href = response.records.youtube;
         this.facebook_href = "https://www.facebook.com/" + response.records.facebook + "/";
@@ -287,7 +280,7 @@ export class Tab1Page implements OnInit, OnDestroy {
         } else {
           this.instagram_status = true
         }
-        if (response.records.delivery_availability == "Available") {
+        if (response.records.delivery_availability == "1") {
           this.ProductDelivery = true
         } else if (response.records.delivery_availability == "") {
           this.ProductDelivery = false
@@ -323,6 +316,8 @@ export class Tab1Page implements OnInit, OnDestroy {
           this.IfOtherOfferPresent = true;
         }
       }
+      console.log(response.records);
+      
       this.scrollToTop();
     }, (error: any) => {
       console.log(error);
@@ -347,21 +342,18 @@ export class Tab1Page implements OnInit, OnDestroy {
       store_name: storename
     }
     this.http.post('/store_details_user', obj).subscribe((response: any) => {
-      
       this.storedetails = response.records;
-      console.log(this.storedetails);
       this.storeAddress = response.records.address_line_1 + " " + response.records.address_line_2 + " " + response.records.city + " : " + response.records.pincode + " " + response.records.state;
       this.websiteLink = response.records.website
       this.whatsApp = response.records.whatsapp
       this.contact = response.records.contact_number
-  
       this.instagram = response.records.instagram
       this.youtube = response.records.youtube
       this.facebook = response.records.facebook
       this.storeID = response.records.tbid
       this.storeLogo = response.records.store_logo
       this.deliveryAvilability = response.records.delivery_availability
-      this.whatsapp_href= "https://wa.me/"+response.records.whatsapp         
+      this.whatsapp_href = "https://wa.me/" + response.records.whatsapp
       this.instagram_href = "https://www.instagram.com/" + response.records.instagram + "/";
       this.youtube_href = response.records.youtube;
       this.facebook_href = "https://www.facebook.com/" + response.records.facebook + "/";
@@ -377,7 +369,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     );
   }
   youtube_href: any;
-  whatsapp_href: any ;
+  whatsapp_href: any;
   instagram_href: any;
   facebook_href: any;
   //-------------- Navigate to dashboard ----------//
@@ -410,51 +402,13 @@ export class Tab1Page implements OnInit, OnDestroy {
   getSelectCategory() {
     this.http.get('/store_category_user').subscribe((response: any) => {
       this.getCategoryList = response.records
-      console.log(response);
 
     }, (error: any) => {
       console.log(error);
     });
   }
 
-  //------------- get offer list -----------//
-  GetOtherofferList() {
-    this.otherofferlist = [];
-    const data = {
-      city: this.city
-    }
-    this.http.post('/list_all_offer', data).subscribe((response: any) => {
-      console.log(response.records);
-      for (var i = 0; i < response.records.length; i++) {
-        if (response.records[i].other_offer != "") {
-          const data = {
-            product_image: response.records[i].product_image,
-            store_name: response.records[i].store_name,
-            offer_time: response.records[i].offer_end_time,
-            total_cost: response.records[i].total_cost,
-            product: response.records[i].product,
-            product_unit: response.records[i].product_unit,
-            other_offer: response.records[i].other_offer,
-            product_weight: response.records[i].product_weight,
-            tbid: response.records[i].tbid
-          }
-          console.log(this.otherofferlist);
-          this.otherofferlist.push(data);
-        }
-      }
-      console.log(this.offerlist);
-      if (response.message == "No offers found.") {
-        this.noDataFound = true;
-      } else {
-        this.noDataFound = false;
-      }
 
-    }, (error: any) => {
-      console.log(error);
-      this.noDataFound = true;
-    }
-    );
-  }
 
 
 
@@ -464,26 +418,25 @@ export class Tab1Page implements OnInit, OnDestroy {
       city: this.city
     }
     this.http.post('/list_all_offer', data).subscribe((response: any) => {
-      console.log(response.records);
       for (var i = 0; i < response.records.length; i++) {
-        if (response.records[i].offer != "") {
-          const data = {
-            store_name: response.records[i].store_name,
-            product_image: response.records[i].product_image,
-            offer_time: response.records[i].offer_end_time,
-            total_cost: response.records[i].total_cost,
-            product: response.records[i].product,
-            product_unit: response.records[i].product_unit,
-            offer: response.records[i].offer,
-            offer_price: response.records[i].offer_price,
-            tbid: response.records[i].tbid,
-            product_weight: response.records[i].product_weight
-          }
-          console.log(this.offerlist);
-          this.offerlist.push(data);
+        // if (response.records[i].offer != "") {
+        const data = {
+          store_name: response.records[i].store_name,
+          product_image: response.records[i].product_image,
+          offer_time: response.records[i].offer_end_time,
+          total_cost: response.records[i].total_cost,
+          product: response.records[i].product,
+          product_unit: response.records[i].product_unit,
+          offer: response.records[i].offer,
+          offer_price: response.records[i].offer_price,
+          tbid: response.records[i].tbid,
+          product_weight: response.records[i].product_weight,
+          other_offer: response.records[i].other_offer
         }
+        this.offerlist.push(data);
+        // }
       }
-      console.log(this.offerlist);
+
       if (response.message == "No offers found.") {
         this.noDataFound = true;
       } else {
@@ -497,27 +450,9 @@ export class Tab1Page implements OnInit, OnDestroy {
     );
   }
 
-  expiryofferlist: any = []
+
   //------------- get offer list -----------//
-  expiryOfferList() {
 
-
-    this.http.get('/list_offer_expiry',).subscribe((response: any) => {
-      this.ExpirynoDataFound = false;
-      this.expiryofferlist = response.records;
-      console.log(this.expiryofferlist);
-      // if(response.message == "No offers found."){
-      //   this.noDataFound = true;
-      // }else{
-      //   this.noDataFound = false;
-      // }
-
-    }, (error: any) => {
-      console.log(error);
-      this.ExpirynoDataFound = false;
-    }
-    );
-  }
 
   //------------- click home slider ----------//
   clickSlideHome() {
@@ -527,76 +462,49 @@ export class Tab1Page implements OnInit, OnDestroy {
     this.noDataFound = false;
     this.isvisible = false
     this.offerList();
-    this.GetOtherofferList();
   }
 
 
-  //------------- click  slider to fetch data based on category ----------//
+  store_category_id: any;
   clickSlide(item) {
-    console.log(item);
+    this.store_category_id = item;
     this.isvisible = false
     this.slideName = item;
     if (this.slideName == "Home") {
       this.offerListVisible = true;
       this.noDataFound = false;
       this.offerList()
-      this.GetOtherofferList();
     }
+
 
     const obj = {
       store_category_id: item,
       city: this.city
-
     }
-
     this.http.post('/list_offer_category', obj).subscribe((response: any) => {
-      if (response.success == "true") {
+      this.offerlist = [];
+      for (var i = 0; i < response.records.length; i++) {
+        // if (response.records[i].offer != "") {
+        const data = {
+          store_name: response.records[i].store_name,
+          product_image: response.records[i].product_image,
+          offer_time: response.records[i].offer_end_time,
+          total_cost: response.records[i].total_cost,
+          product: response.records[i].product,
+          product_unit: response.records[i].product_unit,
+          offer: response.records[i].offer,
+          offer_price: response.records[i].offer_price,
+          tbid: response.records[i].tbid,
+          product_weight: response.records[i].product_weight,
+          other_offer: response.records[i].other_offer,
+        }
     
-        this.offerlist = [];
-        for (var i = 0; i < response.records.length; i++) {
-          if (response.records[i].offer != "") {
-            const data = {
-              store_name: response.records[i].store_name,
-              product_image: response.records[i].product_image,
-              offer_time: response.records[i].offer_end_time,
-              total_cost: response.records[i].total_cost,
-              product: response.records[i].product,
-              product_unit: response.records[i].product_unit,
-              offer: response.records[i].offer,
-              offer_price: response.records[i].offer_price,
-              tbid: response.records[i].tbid,
-              product_weight: response.records[i].product_weight
-            }
-            console.log(this.offerlist);
-            this.offerlist.push(data);
-          }
-        }
-
-        this.otherofferlist = [];
-        for (var i = 0; i < response.records.length; i++) {
-          if (response.records[i].other_offer != "") {
-            const data = {
-              product_image: response.records[i].product_image,
-              store_name: response.records[i].store_name,
-              offer_time: response.records[i].offer_end_time,
-              total_cost: response.records[i].total_cost,
-              product: response.records[i].product,
-              product_unit: response.records[i].product_unit,
-              other_offer: response.records[i].other_offer,
-              product_weight: response.records[i].product_weight,
-              tbid: response.records[i].tbid
-            }
-            console.log(this.otherofferlist);
-            this.otherofferlist.push(data);
-          }
-        }
-
-        console.log(response);
-        this.offerListVisible = true;
-        this.noDataFound = false;
-      } else {
-
+        this.offerlist.push(data);
+        // }
       }
+ 
+      this.offerListVisible = true;
+      this.noDataFound = false;
     }, (error: any) => {
       console.log(error);
       this.offerListVisible = false;
@@ -609,14 +517,12 @@ export class Tab1Page implements OnInit, OnDestroy {
   locationsList: any = []
   locationList() {
     this.locationsList = [];
-    this.http.get('/list_location',).subscribe((response: any) => {
-      console.log(response);
+    this.http.get('/list_location').subscribe((response: any) => {
       for (var i = 0; i <= response.records.length; i++) {
         if (response.records[i].city != null) {
           this.locationsList.push(response.records[i])
         }
       }
-      console.log(response.records.city);
     }, (error: any) => {
       console.log(error);
     });
@@ -625,15 +531,18 @@ export class Tab1Page implements OnInit, OnDestroy {
 
 
   locationBased() {
-    this.offerlist = [];
-    var city = {
-      city: this.city
-    }
-    this.http.post('/list_offer_city', city).subscribe((response: any) => {
-      console.log(response.records);
+    if (this.city == "All") {
+      this.offerList()
+    } else {
       this.offerlist = [];
-      for (var i = 0; i < response.records.length; i++) {
-        if (response.records[i].offer != "") {
+      var city = {
+        city: this.city
+      }
+      this.http.post('/list_offer_city', city).subscribe((response: any) => {
+        console.log(response.records);
+        this.offerlist = [];
+        for (var i = 0; i < response.records.length; i++) {
+          // if (response.records[i].offer != "") {
           const data = {
             store_name: response.records[i].store_name,
             product_image: response.records[i].product_image,
@@ -644,85 +553,32 @@ export class Tab1Page implements OnInit, OnDestroy {
             offer: response.records[i].offer,
             offer_price: response.records[i].offer_price,
             tbid: response.records[i].tbid,
-            product_weight: response.records[i].product_weight
-          }
-          console.log(this.offerlist);
-          this.offerlist.push(data);
-        }
-      }
-      console.log(this.offerlist);
-      if (response.message == "No offers found.") {
-        this.noDataFound = true;
-      } else {
-        this.noDataFound = false;
-      }
-    }, (error: any) => {
-      console.log(error);
-      this.noDataFound = true;
-    }
-    );
-  }
-
-
-
-  locationBasedOtherOffer() {
-    this.otherofferlist = [];
-    const data = {
-      city: this.city
-    }
-    this.http.post('/list_offer_city', data).subscribe((response: any) => {
-      console.log(response.records);
-      this.otherofferlist = [];
-      for (var i = 0; i < response.records.length; i++) {
-        if (response.records[i].other_offer != "") {
-          const data = {
-            product_image: response.records[i].product_image,
-            store_name: response.records[i].store_name,
-            offer_time: response.records[i].offer_end_time,
-            total_cost: response.records[i].total_cost,
-            product: response.records[i].product,
-            product_unit: response.records[i].product_unit,
-            other_offer: response.records[i].other_offer,
             product_weight: response.records[i].product_weight,
-            tbid: response.records[i].tbid
+            other_offer: response.records[i].other_offer,
           }
-          console.log(this.otherofferlist);
-          this.otherofferlist.push(data);
+
+          this.offerlist.push(data)
+          // }
         }
-      }
-      console.log(this.offerlist);
-      if (response.message == "No offers found.") {
-        this.noDataFound = true;
-      } else {
-        this.noDataFound = false;
-      }
-
-    }, (error: any) => {
-      console.log(error);
-      this.noDataFound = true;
-    }
-    );
-  }
-
-  changeLocation() {
-    console.log(this.city);
-    if (this.city == "All") {
-      this.http.get('/list_all_offer',).subscribe((response: any) => {
-        this.offerlist = response.records;
-        console.log(this.offerlist);
+  
         if (response.message == "No offers found.") {
           this.noDataFound = true;
         } else {
           this.noDataFound = false;
         }
-
       }, (error: any) => {
         console.log(error);
         this.noDataFound = true;
       }
       );
     }
+    if (this.store_category_id) {
+      this.clickSlide(this.store_category_id);
+    }
+
   }
+
+
 
   locationChange() {
     this.locationChangeVisible = !this.locationChangeVisible;

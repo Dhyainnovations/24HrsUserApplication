@@ -17,6 +17,7 @@ export class ChangeCategoryPage implements OnInit {
       this.getCategory()
       this.selectedCategories()
       console.log(this.alredySelectedCategoryList);
+      this.CategoryCheck();
     });
   }
 
@@ -25,7 +26,6 @@ export class ChangeCategoryPage implements OnInit {
   }
 
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
-
   getCategoryList: any = [];
   selectedCategoryList: any = []
   alredySelectedCategoryList: any = []
@@ -33,13 +33,16 @@ export class ChangeCategoryPage implements OnInit {
   buttonColor: string = '#000'; //Default Color
   addEvent() {
     this.buttonColor = '#345465'; //desired Color
-
-    /*
-    YOUR FUNCTION CODE
-    */
-
   }
 
+
+  CategoryCheck() {
+    if (this.selectedCategoryList.length < 1) {
+      this.CategoryVerification = true;
+    } else {
+      this.CategoryVerification = false;
+    }
+  }
 
   backToPrivious() {
     this.router.navigate(['/tabs/tab3'])
@@ -47,30 +50,35 @@ export class ChangeCategoryPage implements OnInit {
 
 
   toggleClass(item) {
+    if(item){
     item.active = !item.active;
     this.selectedCategoryList.push(item.tbid);
     // console.log(item);
-    console.log(this.selectedCategoryList);
-
+    console.log(this.selectedCategoryList.length);
+    this.CategoryCheck();
+  }
+    
   }
 
-
+  CategoryVerification: any;
   verify() {
-    const storeCategory = this.selectedCategoryList.toString();
-    console.log(storeCategory);
+    this.CategoryCheck();
+    if (this.CategoryVerification == false) {
+      const storeCategory = this.selectedCategoryList.toString();
+      console.log(storeCategory);
 
-    const Data = {
-      tbid: this.userdetails.id,
-      store_category: storeCategory
+      const Data = {
+        tbid: this.userdetails.id,
+        store_category: storeCategory
+      }
+      console.log(Data);
+      this.http.post('/update_store_category', Data).subscribe((response: any) => {
+      }, (error: any) => {
+        console.log(error);
+      });
+
+      this.router.navigate(['/tabs/tab3'])
     }
-    console.log(Data);
-    this.http.post('/update_store_category', Data).subscribe((response: any) => {
-
-    }, (error: any) => {
-      console.log(error);
-    });
-
-    this.router.navigate(['/tabs/tab3'])
   }
 
   getCategory() {

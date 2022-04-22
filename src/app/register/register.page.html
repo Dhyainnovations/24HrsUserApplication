@@ -20,7 +20,7 @@
         <p class="small" style="color: #EB154B;" *ngIf="isNotEmailAlert">Enter Valid Mail ID</p>
 
         <ion-input style="color: #000000;" [(ngModel)]="mobileNumber" (keyup)="MobileNumberCheckFalse()"
-          placeholder="Enter Your Mobile Number" class="primary-input mt-3"></ion-input>
+          placeholder="Enter Your Mobile Number" class="primary-input mt-3" maxlength="10" (keypress)="numberOnly($event)" type="text"></ion-input>
         <p class="small" style="color: #EB154B;" *ngIf="ValidNumber">Enter Valid Mobile Number</p>
 
         <ion-input style="color: #000000;" [(ngModel)]="password" (keyup)="passwordCheckFalse()"

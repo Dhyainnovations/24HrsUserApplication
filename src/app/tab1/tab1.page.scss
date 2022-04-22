@@ -18,10 +18,7 @@ p {
   margin : 0 !important;
 }
 
-#offer {
-  padding: 2px !important;
-  margin : 5px !important;
-}
+
 
 .report-seller-btn {
   border-radius: 5px !important;
@@ -237,7 +234,9 @@ ion-content {
   }
 }
 
-
+.productDetailsCard{
+  font-size: 12px;
+}
 
 #popupCard {
   position        : absolute;
@@ -248,4 +247,14 @@ ion-content {
   z-index         : 2;
   top             : 25%;
   padding         : 10px;
+ 
+}
+
+.show {
+  visibility: visible;
+}
+
+.hidden {
+  display:none
+
 }
